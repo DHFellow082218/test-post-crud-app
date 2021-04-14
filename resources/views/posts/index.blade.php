@@ -14,8 +14,11 @@
             <a href="#" class="navbar-brand text-success font-weight-bold">Test Post App</a>
         </nav>
         <div class="container">
-            <post-form-component/>
+            <post-app-component/>
         </div>
+  {{--       <div class="container">
+            <post-form-component/>
+        </div> --}}
     </div>
     <script src="{{asset('js/app.js')}}"></script>
 </body>
