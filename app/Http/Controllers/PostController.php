@@ -3,20 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Post; 
-use App\Repositories\PostRepositoryInterface; 
+use App\Models\Post;
+use App\Repositories\PostRepositoryInterface;
 
-use App\Http\Requests\CreatePostRequest; 
-use App\Http\Requests\UpdatePostRequest; 
+use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 class PostController extends Controller
 {
 
-    private $repository; 
+    private $repository;
 
-    public function __construct(PostRepositoryInterface $repository) 
+    public function __construct(PostRepositoryInterface $repository)
     {
-        $this->repository      =       $repository; 
+        $this->repository      =       $repository;
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return $this->repository->getAll(); 
+        return $this->repository->all();
     }
 
     /**
@@ -36,16 +36,19 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-
         Post::create(
             [
-                "title"     =>      $request->title, 
+                "title"     =>      $request->title,
                 "content"   =>      $request->content,
+                "slug"      =>      strtolower(str_replace(' ', '-', $request->title)),
             ]
         );
 
-        
-        return "Post Created";
+        return response()->json(
+            [
+                "message"       =>      "Post Created!",
+            ]
+        );
     }
 
     /**
@@ -56,7 +59,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->get($id); 
+        return $this->repository->findById($id);
     }
 
     /**
@@ -68,14 +71,14 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        Post::find($id)->update(
+
+        $this->repository->update($id);
+
+        return response()->json(
             [
-                "title"         =>      $request->title,
-                "content"       =>       $request->content,
+                "message"       =>      "Post Updated!",
             ]
         );
-
-        return "Post Updated";
     }
 
     /**
@@ -86,9 +89,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        if(!Post::destroy($id))
-            return "Something went wrong"; 
+        $this->repository->delete($id);
 
-        return "Post Deleted";
+        return response()->json(
+            [
+                "message"       =>      "Post Deleted!",
+            ]
+        );
     }
 }

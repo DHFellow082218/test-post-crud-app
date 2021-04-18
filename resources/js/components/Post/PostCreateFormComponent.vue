@@ -47,17 +47,17 @@ export default {
             )
             .then((response) =>
                 {
-                    //console.log(response.data);
+                    console.log(response.data);
                     this.form.title     =   null;
                     this.form.content   =   null;
-                    this.$emit("notify", {'message' : "Post Created!", 'type' : "alert-success"});
+                    this.$emit("notify", {'message' : response.data.message, 'type' : "alert-success"});
                     this.$emit("create");
                 }
             )
             .catch((error) =>
                 {
                     this.$emit("notify", {'message' : "Something Went Wrong!", 'type' : "alert-danger"});
-                    console.log(error)
+                    console.log(error);
                 }
             );
         }

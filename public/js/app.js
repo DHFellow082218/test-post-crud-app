@@ -2034,12 +2034,12 @@ __webpack_require__.r(__webpack_exports__);
         title: this.form.title,
         content: this.form.content
       }).then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
         _this.form.title = null;
         _this.form.content = null;
 
         _this.$emit("notify", {
-          'message': "Post Created!",
+          'message': response.data.message,
           'type': "alert-success"
         });
 
@@ -2129,14 +2129,16 @@ __webpack_require__.r(__webpack_exports__);
         _this.form.title = null;
         _this.form.content = null;
         console.log(response);
+
+        _this.$emit("notify", {
+          'message': response.data.message,
+          'type': "alert-info"
+        });
+
+        _this.$emit("save");
       })["catch"](function (error) {
         return console.log(error);
       });
-      this.$emit("notify", {
-        'message': "Post Updated!",
-        'type': "alert-info"
-      });
-      this.$emit("save");
     }
   }
 });
@@ -2192,14 +2194,18 @@ __webpack_require__.r(__webpack_exports__);
   props: ['posts', 'load'],
   methods: {
     remove: function remove(post) {
+      var _this = this;
+
       axios["delete"]("/api/posts/".concat(post)).then(function (response) {
         console.log(response);
+
+        _this.$emit("notify", {
+          'message': response.data.message,
+          'type': "alert-danger"
+        });
+
+        _this.$emit("remove");
       });
-      this.$emit("notify", {
-        'message': "Post Deleted!",
-        'type': "alert-danger"
-      });
-      this.$emit("remove");
     },
     edit: function edit(post) {
       this.$emit('edit_post', post);
@@ -38518,7 +38524,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fa fa-edit" }),
-                  _vm._v(" Edit \n                    ")
+                  _vm._v(" Edit\n                    ")
                 ]
               ),
               _vm._v(" "),
@@ -38534,7 +38540,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fa fa-trash" }),
-                  _vm._v(" Delete \n                    ")
+                  _vm._v(" Delete\n                    ")
                 ]
               )
             ])

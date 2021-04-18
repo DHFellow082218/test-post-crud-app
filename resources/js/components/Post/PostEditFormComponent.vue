@@ -66,12 +66,11 @@ export default {
                     this.form.title        =   null;
                     this.form.content      =   null;
                     console.log(response);
+                    this.$emit("notify", {'message' : response.data.message, 'type' : "alert-info"});
+                    this.$emit("save");
                 }
             )
             .catch((error) => console.log(error));
-
-            this.$emit("notify", {'message' : "Post Updated!", 'type' : "alert-info"});
-            this.$emit("save");
         },
     },
 }
