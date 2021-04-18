@@ -2034,17 +2034,24 @@ __webpack_require__.r(__webpack_exports__);
         title: this.form.title,
         content: this.form.content
       }).then(function (response) {
-        console.log(response.data);
+        //console.log(response.data);
         _this.form.title = null;
         _this.form.content = null;
+
+        _this.$emit("notify", {
+          'message': "Post Created!",
+          'type': "alert-success"
+        });
+
+        _this.$emit("create");
       })["catch"](function (error) {
-        return console.log(error);
+        _this.$emit("notify", {
+          'message': "Something Went Wrong!",
+          'type': "alert-danger"
+        });
+
+        console.log(error);
       });
-      this.$emit("notify", {
-        'message': "Post Created!",
-        'type': "alert-success"
-      });
-      this.$emit("create");
     }
   }
 });
@@ -6741,7 +6748,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-out\n{\n   opacity      :   1; \n   -webkit-animation    :   fade-out 5s ease-in; \n           animation    :   fade-out 5s ease-in;\n}\n@-webkit-keyframes fade-out \n{\nfrom\n    {\n        opacity : 1\n}\nto\n    {\n        opacity : 0;\n}\n}\n@keyframes fade-out \n{\nfrom\n    {\n        opacity : 1\n}\nto\n    {\n        opacity : 0;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.fade-out\n{\n   opacity      :   1;\n   -webkit-animation    :   fade-out 5s ease-in;\n           animation    :   fade-out 5s ease-in;\n}\n@-webkit-keyframes fade-out\n{\nfrom\n    {\n        opacity : 1\n}\nto\n    {\n        opacity : 0;\n}\n}\n@keyframes fade-out\n{\nfrom\n    {\n        opacity : 1\n}\nto\n    {\n        opacity : 0;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38342,90 +38349,94 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "modal",
+      staticClass: "modal fade",
       attrs: { id: "modal_edit", tabindex: "-1", role: "dialog" }
     },
     [
-      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("Title")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.title,
-                    expression: "form.title"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text" },
-                domProps: { value: _vm.form.title },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+      _c(
+        "div",
+        { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Title")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.title,
+                      expression: "form.title"
                     }
-                    _vm.$set(_vm.form, "title", $event.target.value)
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.form.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "title", $event.target.value)
+                    }
                   }
-                }
-              })
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Content")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.content,
+                      expression: "form.content"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { cols: "30", rows: "10" },
+                  domProps: { value: _vm.form.content },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.form, "content", $event.target.value)
+                    }
+                  }
+                })
+              ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("Content")]),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: { click: _vm.save }
+                },
+                [_vm._v("Update")]
+              ),
               _vm._v(" "),
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.form.content,
-                    expression: "form.content"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { cols: "30", rows: "10" },
-                domProps: { value: _vm.form.content },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.form, "content", $event.target.value)
-                  }
-                }
-              })
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: { click: _vm.save }
-              },
-              [_vm._v("Update")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-secondary",
-                attrs: { type: "button", "data-dismiss": "modal" }
-              },
-              [_vm._v("Close")]
-            )
           ])
-        ])
-      ])
+        ]
+      )
     ]
   )
 }
@@ -38435,7 +38446,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Modal title")]),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Edit Modal")]),
       _vm._v(" "),
       _c(
         "button",

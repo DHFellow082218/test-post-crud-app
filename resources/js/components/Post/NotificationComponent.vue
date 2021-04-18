@@ -7,11 +7,11 @@
 <style>
     .fade-out
     {
-       opacity      :   1; 
-       animation    :   fade-out 5s ease-in; 
+       opacity      :   1;
+       animation    :   fade-out 5s ease-in;
     }
 
-    @keyframes fade-out 
+    @keyframes fade-out
     {
         from
         {
@@ -26,33 +26,33 @@
 
 <script>
 export default {
-    data()  
+    data()
     {
         return{
-            time_out    :  null, 
+            time_out    :  null,
         }
-    }, 
-    methods : 
+    },
+    methods :
     {
         notify(message, type = "")
         {
-            const alert         =       document.createElement('div'); 
-            
-            while(this.$refs.alert.firstChild)
-                this.$refs.alert.removeChild(this.$refs.alert.firstChild); 
-    
-            alert.className     =       `alert ${type} fade-out`; 
-            alert.innerText     =       message; 
+            const alert         =       document.createElement('div');
 
-            this.$refs.alert.appendChild(alert);  
+            while(this.$refs.alert.firstChild)
+                this.$refs.alert.removeChild(this.$refs.alert.firstChild);
+
+            alert.className     =       `alert ${type} fade-out`;
+            alert.innerText     =       message;
+
+            this.$refs.alert.appendChild(alert);
 
             if(this.time_out)
-                clearTimeout(this.time_out); 
+                clearTimeout(this.time_out);
 
-            this.time_out       =   setTimeout(() => 
+            this.time_out       =   setTimeout(() =>
                                     {
                                         while(this.$refs.alert.firstChild)
-                                            this.$refs.alert.removeChild(this.$refs.alert.firstChild); 
+                                            this.$refs.alert.removeChild(this.$refs.alert.firstChild);
                                     }, 5000)
 
         }
