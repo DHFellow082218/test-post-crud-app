@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post; 
+use App\Repositories\PostRepositoryInterface; 
 
 use App\Http\Requests\CreatePostRequest; 
 use App\Http\Requests\UpdatePostRequest; 
 
 class PostController extends Controller
 {
+
+    private $repository; 
+
+    public function __construct(PostRepositoryInterface $repository) 
+    {
+        $this->repository      =       $repository; 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return Post::all(); 
+        return $this->repository->getAll(); 
     }
 
     /**
@@ -48,7 +56,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        return Post::find($id); 
+        return $this->repository->get($id); 
     }
 
     /**
