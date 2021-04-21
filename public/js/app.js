@@ -2020,20 +2020,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      form: {
-        title: null,
-        content: null
-      }
+      form: {}
     };
   },
   methods: {
     submit: function submit() {
       var _this = this;
 
-      axios.post('/api/posts/create', {
-        title: this.form.title,
-        content: this.form.content
-      }).then(function (response) {
+      axios.post('/api/posts/create', this.form).then(function (response) {
         console.log(response.data);
         _this.form.title = null;
         _this.form.content = null;
@@ -2122,10 +2116,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       var _this = this;
 
-      axios.put("/api/posts/".concat(this.post.id), {
-        title: this.form.title,
-        content: this.form.content
-      }).then(function (response) {
+      axios.put("/api/posts/".concat(this.post.id), this.form).then(function (response) {
         _this.form.title = null;
         _this.form.content = null;
         console.log(response);

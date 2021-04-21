@@ -55,12 +55,7 @@ export default {
         },
         save()
         {
-            axios.put(`/api/posts/${this.post.id}`,
-                {
-                    title       :       this.form.title,
-                    content     :       this.form.content,
-                }
-            )
+            axios.put(`/api/posts/${this.post.id}`, this.form)
             .then((response) =>
                 {
                     this.form.title        =   null;

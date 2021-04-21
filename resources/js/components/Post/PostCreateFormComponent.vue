@@ -28,23 +28,14 @@ export default {
     data()
     {
         return{
-            form    :
-            {
-                title   :   null,
-                content :   null
-            },
+            form    : {}, 
         }
     },
     methods:
     {
         submit()
         {
-            axios.post('/api/posts/create',
-                {
-                    title   :   this.form.title,
-                    content :   this.form.content,
-                }
-            )
+            axios.post('/api/posts/create', this.form)
             .then((response) =>
                 {
                     console.log(response.data);
