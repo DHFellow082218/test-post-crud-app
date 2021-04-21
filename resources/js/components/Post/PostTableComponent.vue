@@ -22,6 +22,15 @@
                         </button>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan='3'>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary text-white mr-2" data-toggle="modal" data-target="#modal_create">
+                            <i class="fa fa-plus"></i> Create
+                        </button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

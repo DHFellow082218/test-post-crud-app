@@ -21,10 +21,19 @@ class PostRepository implements PostRepositoryInterface
 
     public function update($id)
     {
-        Post::findOrFail($id)->update(
+        $post       =       Post::findOrFail($id);
+
+        $post->update(
             [
                 "title"         =>       request('title'),
                 "content"       =>       request('content'),
+            ]
+        );
+
+        return response()->json(
+            [
+                'message'       =>      'post updated!',
+                'data'          =>      $post
             ]
         );
     }

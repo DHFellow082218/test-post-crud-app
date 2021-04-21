@@ -36,17 +36,18 @@ class PostController extends Controller
      */
     public function store(CreatePostRequest $request)
     {
-        Post::create(
-            [
-                "title"     =>      $request->title,
-                "content"   =>      $request->content,
-                "slug"      =>      strtolower(str_replace(' ', '-', $request->title)),
-            ]
-        );
+        $post           =       Post::create(
+                                    [
+                                        "title"     =>      $request->title,
+                                        "content"   =>      $request->content,
+                                        "slug"      =>      strtolower(str_replace(' ', '-', $request->title)),
+                                    ]
+                                );
 
         return response()->json(
             [
-                "message"       =>      "Post Created!",
+                "message"       =>      "post created!",
+                "result"        =>      $post,
             ]
         );
     }
@@ -71,14 +72,7 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-
-        $this->repository->update($id);
-
-        return response()->json(
-            [
-                "message"       =>      "Post Updated!",
-            ]
-        );
+        return $this->repository->update($id);
     }
 
     /**
