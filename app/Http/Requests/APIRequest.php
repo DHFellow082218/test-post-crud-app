@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Requests;
 
@@ -23,7 +23,15 @@ abstract class APIRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 422));
+        throw new HttpResponseException(
+            response()->json(
+                [
+                    'message'   =>  'something went wrong!',
+                    'errors'    =>  $validator->errors(),
+                    'type'      =>  'error',
+                ],
+                422
+        ));
     }
     abstract public function rules();
 }

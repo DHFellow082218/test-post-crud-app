@@ -2042,20 +2042,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      form: {}
+      fields: {},
+      errors: {}
     };
   },
   methods: {
     submit: function submit() {
       var _this = this;
 
-      axios.post('/api/posts/create', this.form).then(function (response) {
-        console.log(response.data);
-        _this.form.title = null;
-        _this.form.content = null;
+      axios.post('/api/posts/create', this.fields).then(function (response) {
+        console.log(response.status);
+        console.log(response);
+        _this.fields = {};
+        _this.errors = {};
 
         _this.$emit("notify", {
           'message': response.data.message,
@@ -2064,12 +2077,10 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$emit("create");
       })["catch"](function (error) {
-        _this.$emit("notify", {
-          'message': "Something Went Wrong!",
-          'type': "alert-danger"
-        });
-
-        console.log(error);
+        if (error.response.status === 422) {
+          _this.errors = error.response.data.errors;
+          console.log(_this.errors);
+        }
       });
     }
   }
@@ -2122,29 +2133,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       post: null,
-      form: {
+      fields: {
         title: null,
         content: null
-      }
+      },
+      errors: {}
     };
   },
   methods: {
     edit: function edit(post) {
       this.post = post;
-      this.form.title = post.title;
-      this.form.content = post.content;
+      this.fields.title = post.title;
+      this.fields.content = post.content;
     },
     save: function save() {
       var _this = this;
 
-      axios.put("/api/posts/".concat(this.post.id), this.form).then(function (response) {
-        _this.form.title = null;
-        _this.form.content = null;
-        console.log(response);
+      axios.put("/api/posts/".concat(this.post.id), this.fields).then(function (response) {
+        _this.fields = {};
+        _this.errors = {};
 
         _this.$emit("notify", {
           'message': response.data.message,
@@ -2153,7 +2166,10 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$emit("save");
       })["catch"](function (error) {
-        return console.log(error);
+        if (error.response.status === 422) {
+          alert('test');
+          _this.errors = error.response.data.errors;
+        }
       });
     }
   }
@@ -2172,6 +2188,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -38503,74 +38528,140 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Title")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.title,
-              expression: "form.title"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text" },
-          domProps: { value: _vm.form.title },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "title", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Content")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.content,
-              expression: "form.content"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { cols: "30", rows: "10" },
-          domProps: { value: _vm.form.content },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "content", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group d-flex justify-content-end" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", on: { click: _vm.submit } },
-          [
-            _c("i", { staticClass: "fa fa-plus mr-2" }),
-            _vm._v("Create\n            ")
-          ]
-        )
-      ])
-    ])
-  ])
+  return _c(
+    "div",
+    {
+      ref: "modal",
+      staticClass: "modal fade",
+      attrs: { id: "modal_create", tabindex: "-1", role: "dialog" }
+    },
+    [
+      _c(
+        "div",
+        { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+        [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Title")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.title,
+                      expression: "fields.title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.fields.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "title", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.title
+                  ? _c("small", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.title[0]))
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Content")]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fields.content,
+                      expression: "fields.content"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { cols: "30", rows: "10" },
+                  domProps: { value: _vm.fields.content },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.fields, "content", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.content
+                  ? _c("small", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.content[0]))
+                    ])
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.submit()
+                    }
+                  }
+                },
+                [_vm._v("Create")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              )
+            ])
+          ])
+        ]
+      )
+    ]
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Create Post")]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38616,22 +38707,28 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.form.title,
-                      expression: "form.title"
+                      value: _vm.fields.title,
+                      expression: "fields.title"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "text" },
-                  domProps: { value: _vm.form.title },
+                  domProps: { value: _vm.fields.title },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.form, "title", $event.target.value)
+                      _vm.$set(_vm.fields, "title", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.title
+                  ? _c("small", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.title[0]))
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -38642,22 +38739,28 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.form.content,
-                      expression: "form.content"
+                      value: _vm.fields.content,
+                      expression: "fields.content"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { cols: "30", rows: "10" },
-                  domProps: { value: _vm.form.content },
+                  domProps: { value: _vm.fields.content },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.$set(_vm.form, "content", $event.target.value)
+                      _vm.$set(_vm.fields, "content", $event.target.value)
                     }
                   }
-                })
+                }),
+                _vm._v(" "),
+                _vm.errors && _vm.errors.content
+                  ? _c("small", { staticClass: "text-danger" }, [
+                      _vm._v(_vm._s(_vm.errors.content[0]))
+                    ])
+                  : _vm._e()
               ])
             ]),
             _vm._v(" "),
@@ -38693,7 +38796,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
-      _c("h5", { staticClass: "modal-title" }, [_vm._v("Edit Modal")]),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Edit Post")]),
       _vm._v(" "),
       _c(
         "button",
@@ -38740,54 +38843,58 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.posts, function(post) {
-          return _c("tr", { key: post.id }, [
-            _c("td", [_vm._v(_vm._s(post.title))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post.created_at))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post.updated_at))]),
-            _vm._v(" "),
-            _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-info text-white mr-2",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#modal_edit"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.edit(post)
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-edit" }),
-                  _vm._v(" Edit\n                    ")
-                ]
-              ),
+        [
+          _vm._l(_vm.posts, function(post) {
+            return _c("tr", { key: post.id }, [
+              _c("td", [_vm._v(_vm._s(post.title))]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-sm btn-danger text-white",
-                  on: {
-                    click: function($event) {
-                      return _vm.remove(post.id)
+              _c("td", [_vm._v(_vm._s(post.created_at))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(post.updated_at))]),
+              _vm._v(" "),
+              _c("td", [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-info text-white mr-2",
+                    attrs: {
+                      "data-toggle": "modal",
+                      "data-target": "#modal_edit"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.edit(post)
+                      }
                     }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-trash" }),
-                  _vm._v(" Delete\n                    ")
-                ]
-              )
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-edit" }),
+                    _vm._v(" Edit\n                    ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-sm btn-danger text-white",
+                    on: {
+                      click: function($event) {
+                        return _vm.remove(post.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "fa fa-trash" }),
+                    _vm._v(" Delete\n                    ")
+                  ]
+                )
+              ])
             ])
-          ])
-        }),
-        0
+          }),
+          _vm._v(" "),
+          _vm._m(1)
+        ],
+        2
       )
     ])
   ])
@@ -38805,6 +38912,28 @@ var staticRenderFns = [
       _c("th", [_vm._v("Updated At")]),
       _vm._v(" "),
       _c("th", [_vm._v("Action")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { attrs: { colspan: "3" } }),
+      _vm._v(" "),
+      _c("td", [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-sm btn-primary text-white mr-2",
+            attrs: { "data-toggle": "modal", "data-target": "#modal_create" }
+          },
+          [
+            _c("i", { staticClass: "fa fa-plus" }),
+            _vm._v(" Create\n                    ")
+          ]
+        )
+      ])
     ])
   }
 ]
