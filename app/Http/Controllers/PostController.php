@@ -40,7 +40,7 @@ class PostController extends Controller
             [
                 "title"     =>      $request->title,
                 "content"   =>      $request->content,
-                "slug"      =>      strtolower(str_replace(' ', '-', $request->title)),
+                "slug"      =>      Str::slug($title)
             ]
         );
 

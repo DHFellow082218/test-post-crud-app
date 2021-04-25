@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='container'>
         <notification-component ref='notification'/>
         <post-table-component 
             :posts="posts" 
