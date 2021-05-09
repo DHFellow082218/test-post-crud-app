@@ -6,6 +6,10 @@ use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\APIRequest; 
 use App\Models\Post; 
 
+/**
+ * @queryParam title   required, title of the post 
+ * @queryParam content required, content of the post 
+ */
 class UpdatePostRequest extends FormRequest
 {
     /**

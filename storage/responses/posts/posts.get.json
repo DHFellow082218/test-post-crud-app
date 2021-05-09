@@ -1,0 +1,32 @@
+[
+    {
+        "id": 5,
+        "title": "adfadfad",
+        "content": "adfadfafafd",
+        "slug": "adfadfad",
+        "created_at": "2021-05-02 08:36:09",
+        "updated_at": "2021-05-02 08:36:09",
+        "user_id": null,
+        "category_id": null
+    },
+    {
+        "id": 6,
+        "title": "afaf",
+        "content": "asdfasfdadsf",
+        "slug": "afaf",
+        "created_at": "2021-05-05 16:39:58",
+        "updated_at": "2021-05-05 16:39:58",
+        "user_id": null,
+        "category_id": null
+    },
+    {
+        "id": 7,
+        "title": "adfasdfa",
+        "content": "dsfasdfasdfadf",
+        "slug": "adfasdfa",
+        "created_at": "2021-05-06 12:30:31",
+        "updated_at": "2021-05-06 12:30:31",
+        "user_id": null,
+        "category_id": null
+    }
+]

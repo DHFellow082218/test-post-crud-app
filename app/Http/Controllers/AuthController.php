@@ -4,6 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
+/**
+ * @group Auth Endpoints
+ *
+ * APIs for managing Posts
+ */
+
 class AuthController extends Controller
 {
     /** 

@@ -32,4 +32,18 @@ class CreatePostRequest extends APIRequest
             "content"       =>      ['required'],
         ];
     }
+
+    public function bodyParameters()
+    {
+        return [
+            'title' => [
+                'description' => 'The title of the post.',
+                'example' => 'My First Post',
+            ],
+            'content' => [
+                'description' => 'Contents of the post',
+                'example'     => 'Unlimited Blade Works'
+            ],
+        ];
+    }
 }

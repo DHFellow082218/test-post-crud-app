@@ -1,3 +1,7 @@
-#About 
+# test-post-crud-app
 
-Test Post app created with Laravel 8 and VueJs
+Test Post Crud app created with Laravel 8 and VueJs
+
+## Project Status
+
+Work in Progress
