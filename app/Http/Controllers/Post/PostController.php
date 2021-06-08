@@ -1,22 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Post;
 
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\ApiController;
 use App\Models\Post;
 use App\Repositories\PostRepositoryInterface;
-
 use App\Actions\Posts\StorePost;
 use App\Http\Requests\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\UpdatePostRequest;    
+
+use ResponseBuilder; 
 
 /**
  * @group Posts Endpoints
  *
  * APIs for managing Auth
  */
-
-class PostController extends Controller
+class PostController extends ApiController
 {
 
     private $repository;
@@ -40,7 +42,10 @@ class PostController extends Controller
     */
     public function index()
     {
-        return $this->repository->all();
+
+        $data = Post::all(); 
+
+        return ResponseBuilder::success($data);
     }
 
     /**

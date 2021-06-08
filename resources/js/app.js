@@ -8,10 +8,16 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-import VueRouter from 'vue-router'; 
-import routes from './routes'; 
+//import Router from "vue-router"
 
-Vue.use(VueRouter); 
+import App        from './src/views/App.vue';
+import router     from './src/router/index.js'; 
+import vuetify    from './src/plugins/vuetify.js';
+import titleMixin from './src/mixins/titleMixin.js';
+import store      from './src/store/index.js'; 
+
+Vue.mixin(titleMixin)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -33,7 +39,10 @@ Vue.use(VueRouter);
 
 const app = new Vue(
     {
-        el    : '#app',
-        router: new VueRouter(routes),
+        el          : '#app',
+        components  : {App}, 
+        router      : router,
+        vuetify     : vuetify, 
+        store       : store, 
     }
 );

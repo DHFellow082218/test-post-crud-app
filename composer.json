@@ -13,6 +13,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "lorisleiva/laravel-actions": "^2.1",
+        "marcin-orlowski/laravel-api-response-builder": "^9.2",
         "spatie/laravel-activitylog": "^4.0",
         "tymon/jwt-auth": "^1.0"
     },

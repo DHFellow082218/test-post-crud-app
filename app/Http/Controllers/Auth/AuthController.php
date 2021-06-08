@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 
-
+use ResponseBuilder; 
 /**
  * @group Auth Endpoints
  *
  * APIs for managing Posts
  */
-
-class AuthController extends Controller
+class AuthController extends ApiController
 {
     /** 
      * Create a new AuthController instance.
@@ -32,7 +32,8 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
+        if (! $token = auth()->attempt($credentials)) 
+        {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
@@ -80,10 +81,12 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+        return response()->json(
+            [
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'expires_in' => auth()->factory()->getTTL() * 60
+            ]
+        );
     }
 }

@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Post\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,11 +19,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('posts')->group(function () 
 {
-    Route::get(''      ,   'PostController@index');
-    Route::get('{id}'  ,   'PostController@show');
-    Route::post('create',   'PostController@store');
-    Route::put('{id}', 'PostController@update'); 
-    Route::delete('{id}',   'PostController@destroy');
+    Route::get('',          [PostController::class, 'index']);
+    Route::get('{id}',      [PostController::class, 'show']);
+    Route::post('create',   [PostController::class, 'store']);
+    Route::put('{id}',      [PostController::class, 'update']); 
+    Route::delete('{id}',   [PostController::class, 'destroy']);
 });
 
 Route::group([
@@ -30,9 +33,9 @@ Route::group([
 
 ], function ($router) {
 
-    Route::post('login', 'AuthController@login');
-    Route::post('logout', 'AuthController@logout');
-    Route::post('refresh', 'AuthController@refresh');
-    Route::post('me', 'AuthController@me');
+    Route::post('login',    [AuthController::class, 'login']);
+    Route::post('logout',   [AuthController::class, 'logout']);
+    Route::post('refresh',  [AuthController::class, 'refresh']);
+    Route::post('me',       [AuthController::class, 'me']);
 
 });

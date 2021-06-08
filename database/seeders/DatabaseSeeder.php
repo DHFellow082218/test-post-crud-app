@@ -13,6 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        if(env('APP_DEBUG'))
+        {
+            $this->call([
+                PostsSeeder::class,
+            ]);
+        }
     }
 }
