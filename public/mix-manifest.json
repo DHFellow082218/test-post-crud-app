@@ -3,5 +3,9 @@
     "/js/navigation.js": "/js/navigation.js",
     "/js/footer.js": "/js/footer.js",
     "/js/NotFound.js": "/js/NotFound.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/home.js": "/js/home.js",
+    "/js/register.js": "/js/register.js",
+    "/js/login.js": "/js/login.js",
+    "/js/post.js": "/js/post.js"
 }

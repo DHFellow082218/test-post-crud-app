@@ -3,10 +3,13 @@ import Vue from "vue";
 import Router from "vue-router"
 
 //* Components  
-import Register from "../views/auth/Register"; 
-import Login from "../views/auth/Login"; 
-import Home from "../views/home/Home"; 
-import Post from "../views/posts/Post"; 
+
+
+//* Middleware 
+
+
+//* Store 
+import store from '../store/index'; 
 
 Vue.use(Router);
 
@@ -18,39 +21,40 @@ export default new Router(
         [
             {
                 path        :       '/', 
-                component   :       Home, 
+                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "home" */ "../views/home/Home"), 
                 name        :       'home' 
             }, 
             {
                 path        :       '/register', 
-                component   :       Register, 
+                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "register" */ "../views/auth/Register"),  
                 name        :       'register' 
             }, 
             {
                 path        :       '/login', 
-                component   :       Login, 
-                name        :       'login' 
-            }, 
-            {
-                path        :       '/posts', 
-                component   :       Post, 
-                name        :       'posts', 
-                beforeEnter :       (to, from, next)  =>  
+                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "login" */ "../views/auth/Login"),  
+                name        :       'login', 
+                beforeEnter :       (to, from, next) =>
                                     {
-                                        if(1 == 1)
+                                        if(!store.getters['auth/is_authenticated'])
                                         {
-                                            next();  
+                                            return next(); 
                                         }
                                         else 
                                         {
-                                            next({name: "404"});
+                                            return next({name : 'home'});
                                         }
-                                    } 
+
+                                    }
+            }, 
+            {
+                path        :       '/posts', 
+                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "post" */ "../views/posts/Post"),   
+                name        :       'posts', 
             },
             {
                 path        :       '/404',
                 alias       :       '*',  
-                component   :       () => import(/*webpackChunkName: "NotFound"*/ "../views/errors/404.vue"), 
+                component   :       () => import(/* webpackPrefetch: true, webpackChunkName: "NotFound" */ "../views/errors/404.vue"), 
                 name        :       '404' 
             },
         ]
