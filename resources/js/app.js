@@ -13,7 +13,7 @@ require('./src/config/axios');
 
 //* Utils 
 require('./src/utils/subscriber'); 
-require('./src/utils/reauthenticate');
+//require('./src/utils/reauthenticate');
 
 //* Components 
 import App        from './src/views/App.vue';
@@ -47,12 +47,17 @@ Vue.mixin(titleMixin)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue(
-    {
-        el          : '#app',
-        components  : {App}, 
-        router      : router,
-        vuetify     : vuetify, 
-        store       : store, 
-    }
-);
+store.dispatch('auth/attempt', localStorage.getItem('token'))
+    .then(() => 
+        {
+            const app = new Vue(
+                {
+                    el          : '#app',
+                    components  : {App}, 
+                    router      : router,
+                    vuetify     : vuetify, 
+                    store       : store, 
+                }
+            );
+        }
+    );
