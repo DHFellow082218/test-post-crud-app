@@ -13,8 +13,6 @@ store.subscribe(mutation =>
                 }
                 else 
                 {
-                    console.log( `In Subscribe Failed`);
-
                     axios.defaults.headers.common['Authorization'] = null;   
                     localStorage.removeItem('token');   
                 }

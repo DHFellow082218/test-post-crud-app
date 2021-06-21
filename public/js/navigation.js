@@ -73,9 +73,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)({
     is_authenticated: "auth/is_authenticated"
   })),
-  methods: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)({
-    logout: "auth/logout"
-  }))
+  methods: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapActions)({
+    logoutAction: "auth/logout"
+  })), {}, {
+    logout: function logout() {
+      var _this = this;
+
+      this.logoutAction().then(function (res) {
+        if (res.data.success) {
+          _this.$router.replace({
+            name: 'login'
+          });
+        } else {
+          console.log('error');
+        }
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    }
+  })
 });
 
 /***/ }),

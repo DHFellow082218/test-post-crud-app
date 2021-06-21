@@ -17,7 +17,7 @@
               Logout
             </v-btn>
         </template>
-    </v-app-bar>
+      </v-app-bar>
     </div>
     <!-- <v-container>
         <v-navigation-drawer
@@ -64,11 +64,33 @@
     },     
     methods: 
     {
-        ...mapActions(
-          {
-            logout : "auth/logout"
-          }
-        ),
+      ...mapActions(
+        {
+          logoutAction : "auth/logout"
+        }
+      ),
+
+      logout()
+      {
+        this.logoutAction()
+          .then((res) =>
+            {
+              if(res.data.success)
+              {
+                this.$router.replace({name : 'login'})
+              } 
+              else 
+              {
+                console.log('error'); 
+              }
+            }
+          )
+          .catch(err => 
+            {
+              console.log(err); 
+            }
+          );
+      }
     }
   }
 </script>

@@ -92,10 +92,23 @@ export default(
                 }
             },
 
-            async logout({dispatch, commit})
+            logout({dispatch, commit})
             {
-                commit('SET_TOKEN', null); 
-                commit('SET_USER', null); 
+
+                return axios.post('auth/logout')
+                            .then((res) => 
+                                {
+                                    commit('SET_TOKEN', null); 
+                                    commit('SET_USER', null); 
+
+                                    return res; 
+                                }
+                            )
+                            .catch(err => 
+                                {
+                                   return err.response; 
+                                }
+                            );
             }
         }, 
         mutations:
