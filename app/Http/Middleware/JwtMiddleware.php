@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 
-use Tymon\JWTAuth\Http\Middleware\BaseMiddleware;
 use Closure;
 use Exception;
 use JWTAuth;

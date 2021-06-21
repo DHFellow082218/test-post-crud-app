@@ -1,27 +1,23 @@
 <template>
   <v-app id="inspire">
-    <h1>{{$route.path}}</h1>
-    <router-link :to="{name: 'home'}">Home</router-link>
-    <router-link :to="{name: 'register'}">Register</router-link>
-    <router-link :to="{name: 'login'}">Login</router-link>
-    <router-link :to="{name: 'posts'}">Posts</router-link>
+    <the-navigation/>
     <v-main>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.path"/>
       </transition>
     </v-main>
+    <the-footer/>
   </v-app>
 </template>
 
-<script>
-  import Navigation from './layouts/Navigation';
-  
+<script>  
   export default 
   {
     title: 'Foo Page',
     components              : 
     {
-        Navigation, 
+        TheNavigation: () => import(/* webpackPrefetch: true, webpackChunkName: "navigation" */ './layouts/TheNavigation.vue'), 
+        TheFooter    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'), 
     },
   }
 </script>

@@ -1,5 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
+    "/js/navigation.js": "/js/navigation.js",
+    "/js/footer.js": "/js/footer.js",
     "/js/NotFound.js": "/js/NotFound.js",
     "/css/app.css": "/css/app.css"
 }

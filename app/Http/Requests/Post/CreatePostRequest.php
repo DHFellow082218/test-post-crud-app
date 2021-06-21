@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Post;
 
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator ;
-use Illuminate\Contracts\Validation\ValidationException; 
-use App\Http\Requests\APIRequest; 
-use App\Models\Post; 
+use App\Http\Requests\ResponseRequest; 
 
-class CreatePostRequest extends APIRequest 
+class CreatePostRequest extends ResponseRequest 
 {
     /**
      * Determine if the user is authorized to make this request.

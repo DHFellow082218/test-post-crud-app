@@ -2,12 +2,11 @@
 
 namespace {{ namespace }};
 
-use Illuminate\Http\Request;
-
-use App\Http\Controllers\ApiController;
 use {{ namespacedModel }};
+use App\Http\Controllers\ApiController;
 
-use ResponseBuilder; 
+use Illuminate\Http\Request;
+use App\Http\Api\ApiCodes;
 
 class {{ class }} extends ApiController
 {
@@ -62,6 +61,39 @@ class {{ class }} extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function destroy({{ model }} ${{ modelVariable }})
+    {
+        //
+    }
+
+    /**
+     * Retrieve archives from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function archives(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+    }
+
+    /**
+     * Permanently Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
     {
         //
     }

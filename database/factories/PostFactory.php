@@ -27,7 +27,7 @@ class PostFactory extends Factory
         return [
             'slug'  => Str::slug($title),
             'title' => $title,
-            'content' => $this->faker->text(), 
+            'content' => $this->faker->paragraph(30), 
         ];
     }
 }

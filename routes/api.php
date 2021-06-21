@@ -3,7 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Auth\AuthController;
+//* Classes
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\RefreshController;
+
 use App\Http\Controllers\Post\PostController;
 
 /*
@@ -17,25 +23,22 @@ use App\Http\Controllers\Post\PostController;
 |
 */
 
-Route::prefix('posts')->group(function () 
+//* Auth API Routes
+Route::prefix('auth')->group(function () 
 {
-    Route::get('',          [PostController::class, 'index']);
-    Route::get('{id}',      [PostController::class, 'show']);
-    Route::post('create',   [PostController::class, 'store']);
-    Route::put('{id}',      [PostController::class, 'update']); 
-    Route::delete('{id}',   [PostController::class, 'destroy']);
+    Route::post('login',    LoginController::class);
+    Route::post('logout',   LogoutController::class);
+    Route::post('refresh',  RefreshController::class);
+    Route::post('register', RegisterController::class);
+    Route::get('profile',  ProfileController::class);
 });
 
-Route::group([
-
-    'middleware' => 'api',
-    'prefix' => 'auth'
-
-], function ($router) {
-
-    Route::post('login',    [AuthController::class, 'login']);
-    Route::post('logout',   [AuthController::class, 'logout']);
-    Route::post('refresh',  [AuthController::class, 'refresh']);
-    Route::post('me',       [AuthController::class, 'me']);
-
+//* Post API Routes
+Route::prefix('posts')->group(function () 
+{
+    Route::get('',            [PostController::class, 'index']);
+    Route::get('{slug}',      [PostController::class, 'show']);
+    Route::post('create',     [PostController::class, 'store']);
+    Route::put('{slug}',      [PostController::class, 'update']); 
+    Route::delete('{slug}',   [PostController::class, 'destroy']);
 });

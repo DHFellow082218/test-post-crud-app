@@ -7,9 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Scopes\OrderBy;  
 
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
+
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
     
     protected $table            =       "posts";
     protected $fillable         =       ['slug', 'title', 'content'];
@@ -18,6 +21,14 @@ class Post extends Model
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+        ->useLogName('posts')
+        ->logOnly(['slug', 'title', 'content']);
+        // Chain fluent methods for configuration options
+    }
 
     protected function orderBy()
     {

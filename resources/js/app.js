@@ -8,13 +8,23 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-//import Router from "vue-router"
+//* Config 
+require('./src/config/axios'); 
 
+//* Utils 
+require('./src/utils/subscriber'); 
+require('./src/utils/reauthenticate');
+
+//* Components 
 import App        from './src/views/App.vue';
+
+//* Libraries | Packages 
 import router     from './src/router/index.js'; 
 import vuetify    from './src/plugins/vuetify.js';
+import store      from './src/store/index.js';
+
+//* Mixins 
 import titleMixin from './src/mixins/titleMixin.js';
-import store      from './src/store/index.js'; 
 
 Vue.mixin(titleMixin)
 

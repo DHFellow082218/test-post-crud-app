@@ -1,16 +1,18 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import Vue from 'vue';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 
-import 'material-design-icons-iconfont/dist/material-design-icons.css' // Ensure you are using css-loader
+// Ensure you are using css-loader
+import '@mdi/font/css/materialdesignicons.css'; 
+//import 'material-design-icons-iconfont/dist/material-design-icons.css' 
 
 Vue.use(Vuetify)
 
 export default new Vuetify(
     {
         icons: 
-        {
-            iconfont: 'md',
+        { 
+            iconfont: 'mdi' 
         },   
         theme: 
         {
@@ -21,7 +23,7 @@ export default new Vuetify(
                     primary: '#3fa1f5',
                     secondary: '#696969',
                     accent: '#8cfebf',
-                    error: '#c76cbc',
+                    error: '#fc6f90',
                     black: '#111',
                 },
             },

@@ -2,32 +2,27 @@
 
 namespace App\Http\Controllers\Post;
 
-use Illuminate\Http\Request;
-
 use App\Http\Controllers\ApiController;
 use App\Models\Post;
-use App\Repositories\PostRepositoryInterface;
 use App\Actions\Posts\StorePost;
-use App\Http\Requests\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;    
+use App\Actions\Logs\LogActivity; 
+use App\Http\Requests\Post\CreatePostRequest;
+use App\Http\Requests\Post\UpdatePostRequest;
+use App\Http\Resources\Post\PostCollection;
 
-use ResponseBuilder; 
+use Illuminate\Support\Str; 
 
-/**
+/*
  * @group Posts Endpoints
  *
  * APIs for managing Auth
  */
 class PostController extends ApiController
 {
-
-    private $repository;
-
-    public function __construct(PostRepositoryInterface $repository)
+    public function __construct()
     {
-        $this->repository      =       $repository;
+        //$this->middleware('jwt.verify')->except(['show']);
     }
-
 
     /**
     * Displays All Posts.
@@ -42,10 +37,9 @@ class PostController extends ApiController
     */
     public function index()
     {
+        $data = PostCollection::collection(Post::all());         
 
-        $data = Post::all(); 
-
-        return ResponseBuilder::success($data);
+        return $this->respondRetrieved($data); 
     }
 
     /**
@@ -63,15 +57,16 @@ class PostController extends ApiController
      */
     public function store(CreatePostRequest $request)
     {
-   
-        $post = StorePost::run($request); 
+        $data = StorePost::run($request); 
         
-        return response()->json(
-            [
-                "message"       =>      "post created!",
-                "result"        =>      $post,
-            ]
-        );
+        //LogActivity::run('posts', 'created', $data ,'post created'); 
+        
+        /*    activity(Str::upper('posts'))
+            ->on($data)
+            ->event('created')
+            ->log(Str::upper('post created'));  */
+
+        return $this->respondCreated($data);
     }
 
     /**
@@ -81,16 +76,18 @@ class PostController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        try
+        try 
         {
-            return $this->repository->findById($id);
+            $data = Post::where('slug', '=', $slug)->firstOrFail();         
         }
         catch(\Exception $e)
         {
-            return response()->json(["message" => $e->getMessage()]);
+            return $this->respondNotFound();
         }
+        
+        return $this->respondRetrieved($data); 
     }
 
     /**
@@ -103,7 +100,9 @@ class PostController extends ApiController
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        return $this->repository->update($id);
+        $data = null; 
+
+        return $this->respondUpdated($data); 
     }
 
     /**
@@ -112,14 +111,30 @@ class PostController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $this->repository->delete($id);
+        return $this->respondDestroyed(); 
+    }
 
-        return response()->json(
-            [
-                "message"       =>      "Post Deleted!",
-            ]
-        );
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($slug)
+    {
+        return $this->respondRestored(); 
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($slug)
+    {
+        return $this->respondDeleted(); 
     }
 }

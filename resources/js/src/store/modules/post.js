@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export default(
     {
         namespaced: true, 
@@ -18,13 +16,22 @@ export default(
         {
             index(context)
             {
-                axios.get('/api/posts')
+                axios.get('posts')
                 .then((response) =>  
                     {
-                        context.commit('setPosts', response.data.data.items); 
+                        context.commit('setPosts', response.data.data.item); 
                     }
                 )
-                 .catch((error) => console.log(error));
+                 .catch((error) => 
+                    {
+                        if (error.response) 
+                        {
+                            console.log(error.response.data);
+                            console.log(error.response.status);
+                            console.log(error.response.headers);
+                        }
+                    }
+                );
             }
         }, 
         mutations:

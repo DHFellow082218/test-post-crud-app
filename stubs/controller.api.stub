@@ -2,15 +2,19 @@
 
 namespace {{ namespace }};
 
+use App\Http\Controllers\ApiController;
+
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\ApiController;
-use {{ rootNamespace }}Http\Controllers\Controller;
-
-use ResponseBuilder; 
+use App\Http\Api\ApiCodes;
 
 class {{ class }} extends ApiController
 {
+    public function construct()
+    {
+        //$this->middleware('jwt.verify')->except([]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -62,6 +66,39 @@ class {{ class }} extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
+    {
+        //
+    }
+
+     /**
+     * Retrieve archives from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function archives(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        //
+    }
+
+    /**
+     * Permanently Delete the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id)
     {
         //
     }

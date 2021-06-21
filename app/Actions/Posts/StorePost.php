@@ -4,8 +4,6 @@ namespace App\Actions\Posts;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 
-use Illuminate\Http\Request; 
-
 use App\Models\Post; 
 
 class StorePost
