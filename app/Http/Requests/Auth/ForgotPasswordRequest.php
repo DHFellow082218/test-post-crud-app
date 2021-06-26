@@ -4,7 +4,7 @@ namespace App\Http\Requests\Auth;
 
 use App\Http\Requests\ResponseRequest;
 
-class ChangePasswordRequest extends ResponseRequest
+class ForgotPasswordRequest extends ResponseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class ChangePasswordRequest extends ResponseRequest
      */
     public function authorize()
     {
-        return auth()->user();
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class ChangePasswordRequest extends ResponseRequest
     public function rules()
     {
         return [
-            "password"  => ["required", "confirmed"]
+            "email" => ["required", "email"]
         ];
     }
 }

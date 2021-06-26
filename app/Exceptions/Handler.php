@@ -39,11 +39,12 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {                
+        /*
         if($e instanceof ModelNotFoundException)
         {
             return $this->respondWithExceptionError(ApiCodes::MODEL_NOT_FOUND ,$e->getMessage()); 
         }
-
+        
         if($e instanceof ErrorException)
         {
             return $this->respondWithExceptionError(ApiCodes::UNCAUGHT_EXCEPTION ,$e->getMessage()); 
@@ -63,6 +64,7 @@ class Handler extends ExceptionHandler
         {
             return $this->respondWithExceptionError(ApiCodes::AUTHENTICATION_EXCEPTION ,$e->getMessage()); 
         }
+        */
 
         return ExceptionHandlerHelper::render($request, $e);
     }

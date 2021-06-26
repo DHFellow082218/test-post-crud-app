@@ -159,30 +159,12 @@ return [
 		 *                  message ($ex->getMessage()).
 		 */
 
-		'exception' 					=> [
-			'http_not_found'           	=> ['code' => ApiCodes::HTTP_NOT_FOUND],
-			'http_service_unavailable' 	=> ['code' => ApiCodes::HTTP_SERVICE_UNAVAILABLE],
-			'http_exception'           	=> ['code' => ApiCodes::HTTP_EXCEPTION],
-			'uncaught_exception'       	=> ['code' => ApiCodes::UNCAUGHT_EXCEPTION],
-			'authentication_exception' 	=> ['code' => ApiCodes::AUTHENTICATION_EXCEPTION],
-			'validation_exception'     	=> ['code' => ApiCodes::VALIDATION_EXCEPTION],
-		],
-
-		'map' => [
-			ApiCodes:: HTTP_NOT_FOUND	       		=> 'api.http_not_found',
-			ApiCodes:: HTTP_SERVICE_UNAVAILABLE 	=> 'api.http_service_unavailable',
-			ApiCodes:: HTTP_EXCEPTION	       		=> 'api.http_exception',
-			ApiCodes:: UNCAUGHT_EXCEPTION       	=> 'api.uncaught_exception',
-			ApiCodes:: AUTHENTICATION_EXCEPTION 	=> 'api.authentication_exception',
-			ApiCodes:: VALIDATION_EXCEPTION	   		=> 'api.validation_exception',
-		],
-
 		\Illuminate\Validation\ValidationException::class => [
 			'handler' => \MarcinOrlowski\ResponseBuilder\ExceptionHandlers\ValidationExceptionHandler::class,
 			'pri'     => -100,
 			'config'  => [
-				'api_code'  => ApiCodes::VALIDATION_EXCEPTION,
-				'http_code' => HttpResponse::HTTP_UNPROCESSABLE_ENTITY,
+//		        'api_code'  => ApiCodes::YOUR_API_CODE_FOR_VALIDATION_EXCEPTION,
+//		        'http_code' => HttpResponse::HTTP_UNPROCESSABLE_ENTITY,
 			],
 		],
 
@@ -190,43 +172,21 @@ return [
 			'handler' => \MarcinOrlowski\ResponseBuilder\ExceptionHandlers\HttpExceptionHandler::class,
 			'pri'     => -100,
 			'config'  => [
-				HttpException::class => [
-					// used by unauthenticated() to obtain api and http code for the exception
-					HttpResponse::HTTP_UNAUTHORIZED         => [
-						'api_code' => ApiCodes::AUTHENTICATION_EXCEPTION,
-					],
-					// Required by ValidationException handler
-					HttpResponse::HTTP_UNPROCESSABLE_ENTITY => [
-						'api_code' => ApiCodes::VALIDATION_EXCEPTION,
-					],
-					// default handler is mandatory and MUST have both `api_code` and `http_code` set.
-					'default'                               => [
-						'api_code'  => ApiCodes::UNCAUGHT_EXCEPTION,
-						'http_code' => HttpResponse::HTTP_BAD_REQUEST,
-					],
-				],
-			],
-
-			\Illuminate\Database\Eloquent\ModelNotFoundException::class => [
-				'handler' => \MarcinOrlowski\ResponseBuilder\ExceptionHandlers\HttpExceptionHandler::class,
-				'pri'     => -100,
-				'config'  => [
-					HttpException::class => [
-						// used by unauthenticated() to obtain api and http code for the exception
-						HttpResponse::HTTP_UNAUTHORIZED         => [
-							'api_code' => ApiCodes::AUTHENTICATION_EXCEPTION,
-						],
-						// Required by ValidationException handler
-						HttpResponse::HTTP_UNPROCESSABLE_ENTITY => [
-							'api_code' => ApiCodes::VALIDATION_EXCEPTION,
-						],
-						// default handler is mandatory and MUST have both `api_code` and `http_code` set.
-						'default'                               => [
-							'api_code'  => ApiCodes::HTTP_NOT_FOUND,
-							'http_code' => HttpResponse::HTTP_NOT_FOUND,
-						],
-					],
-				],
+//		        HttpException::class => [
+//			        // used by unauthenticated() to obtain api and http code for the exception
+//			        HttpResponse::HTTP_UNAUTHORIZED         => [
+//				        'api_code' => ApiCodes::YOUR_API_CODE_FOR_UNATHORIZED_EXCEPTION,
+//			        ],
+//			        // Required by ValidationException handler
+//			        HttpResponse::HTTP_UNPROCESSABLE_ENTITY => [
+//				        'api_code' => ApiCodes::YOUR_API_CODE_FOR_VALIDATION_EXCEPTION,
+//			        ],
+//			        // default handler is mandatory and MUST have both `api_code` and `http_code` set.
+//			        'default'                               => [
+//				        'api_code'  => ApiCodes::YOUR_API_CODE_FOR_GENERIC_HTTP_EXCEPTION,
+//				        'http_code' => HttpResponse::HTTP_BAD_REQUEST,
+//			        ],
+//		        ],
 			],
 
 			/*
@@ -239,8 +199,8 @@ return [
 				'handler' => \MarcinOrlowski\ResponseBuilder\ExceptionHandlers\HttpExceptionHandler::class,
 				'pri'     => -127,
 				'config'  => [
-					'api_code'  => ApiCodes::UNCAUGHT_EXCEPTION,
-					'http_code' =>  HttpResponse::HTTP_BAD_REQUEST,
+//			        'api_code'  => ApiCodes::YOUR_API_CODE_FOR_UNHANDLED_EXCEPTION,
+//			        'http_code' => HttpResponse::HTTP_INTERNAL_SERVER_ERROR,
 				],
 			],
 		],

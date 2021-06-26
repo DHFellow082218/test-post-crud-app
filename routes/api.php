@@ -9,6 +9,9 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RefreshController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 use App\Http\Controllers\Post\PostController;
 
@@ -26,11 +29,15 @@ use App\Http\Controllers\Post\PostController;
 //* Auth API Routes
 Route::prefix('auth')->group(function () 
 {
-    Route::post('login',    LoginController::class);
-    Route::post('logout',   LogoutController::class);
-    Route::post('refresh',  RefreshController::class);
-    Route::post('register', RegisterController::class);
-    Route::get('profile',  ProfileController::class);
+    Route::get('profile',           ProfileController::class);
+    Route::post('login',            LoginController::class);
+    Route::post('logout',           LogoutController::class);
+    Route::post('refresh',          RefreshController::class);
+    Route::post('register',         RegisterController::class);
+    Route::post('change-password',  ChangePasswordController::class); 
+    Route::post('forgot-password',  ForgotPasswordController::class); 
+    Route::post('reset-password',   ResetPasswordController::class); 
+
 });
 
 //* Post API Routes
