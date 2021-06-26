@@ -35,10 +35,10 @@ class ForgotPasswordController extends ApiController
         return $this->respondWithMessage("Reset Password Email Sent, please check your email");  
     }
 
-    private function sendResetPasswordEmail($data)
+    private function sendResetPasswordEmail($email)
     {
         return  Password::sendResetLink(
-                    $data
+                    $email
                 );
     }
 }
