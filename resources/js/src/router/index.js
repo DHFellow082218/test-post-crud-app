@@ -1,62 +1,92 @@
 //* Packages
 import Vue from "vue";
-import Router from "vue-router"
-
-//* Components  
-
+import VueRouter from "vue-router"
 
 //* Middleware 
 
 
-//* Store 
-import store from '../store/index'; 
+//* Routes 
+import AuthRoutes from "./routes/AuthRoutes"; 
+import BaseRoutes from "./routes/BaseRoutes"; 
+import ErrorRoutes from "./routes/ErrorRoutes"; 
+import PostRoutes from "./routes/PostRoutes";
 
-Vue.use(Router);
+Vue.use(VueRouter);
 
 //* Router 
-export default new Router( 
+const router = new VueRouter( 
     {
         mode    :   'history',  
         routes  :   
         [
-            {
-                path        :       '/', 
-                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "home" */ "../views/home/Home"), 
-                name        :       'home' 
-            }, 
-            {
-                path        :       '/register', 
-                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "register" */ "../views/auth/Register"),  
-                name        :       'register' 
-            }, 
-            {
-                path        :       '/login', 
-                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "login" */ "../views/auth/Login"),  
-                name        :       'login', 
-                beforeEnter :       (to, from, next) =>
-                                    {
-                                        if(!store.getters['auth/is_authenticated'])
-                                        {
-                                            return next(); 
-                                        }
-                                        else 
-                                        {
-                                            return next({name : 'home'});
-                                        }
-
-                                    }
-            }, 
-            {
-                path        :       '/posts', 
-                component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "post" */ "../views/posts/Post"),   
-                name        :       'posts', 
-            },
-            {
-                path        :       '/404',
-                alias       :       '*',  
-                component   :       () => import(/* webpackPrefetch: true, webpackChunkName: "NotFound" */ "../views/errors/404.vue"), 
-                name        :       '404' 
-            },
+            ...AuthRoutes,
+            ...BaseRoutes, 
+            ...ErrorRoutes, 
+            ...PostRoutes, 
         ]
     }
 )
+
+//! Credit: https://markus.oberlehner.net/blog/implementing-a-simple-middleware-with-vue-router/
+//* Creates a `nextMiddleware()` function which not only
+//* runs the default `next()` callback but also triggers
+//* the subsequent Middleware function.
+function nextFactory(context, middleware, index) 
+{
+    const subsequentMiddleware = middleware[index];
+    
+    // If no subsequent Middleware exists,
+    // the default `next()` callback is returned.
+    if(!subsequentMiddleware) 
+    {
+        return context.next;
+    }
+
+    return(...parameters) => 
+    {
+        // Run the default Vue Router `next()` callback first.
+        context.next(...parameters);
+
+        // Then run the subsequent Middleware with a new
+        // `nextMiddleware()` callback.
+
+        const nextMiddleware = nextFactory(context, middleware, index + 1);
+
+        subsequentMiddleware(
+            { 
+                ...context, 
+                next: nextMiddleware 
+            }
+        );
+    };
+}
+
+router.beforeEach((to, from, next) => 
+{
+    if (to.meta.middleware) 
+    {
+        const middleware    =   Array.isArray(to.meta.middleware)
+                                    ? to.meta.middleware
+                                    : [to.meta.middleware];
+
+        const context       =   {
+                                    from,
+                                    next,
+                                    router,
+                                    to,
+                                };
+
+        const nextMiddleware = nextFactory(context, middleware, 1);
+
+        return middleware[0](
+            { 
+                ...context, 
+                next: nextMiddleware 
+            }
+        );
+    }
+
+    return next();
+});
+
+export default router; 
