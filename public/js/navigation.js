@@ -43,25 +43,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -187,65 +168,67 @@ var render = function() {
   return _c(
     "div",
     [
-      _vm.$route.name !== "login"
-        ? _c(
-            "v-app-bar",
-            { staticClass: "px-5", attrs: { app: "" } },
-            [
-              _c(
-                "router-link",
-                {
-                  class: { "green--text": _vm.$route.name === "home" },
-                  attrs: { to: { name: "home" } }
-                },
-                [_vm._v("Home")]
-              ),
-              _vm._v(" "),
-              _c("v-spacer"),
-              _vm._v(" "),
-              !_vm.is_authenticated
-                ? [
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "mr-5",
-                        class: { "green--text": _vm.$route.name === "login" },
-                        attrs: { to: { name: "login" } }
-                      },
-                      [_vm._v("\n        Login\n      ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        class: {
-                          "green--text": _vm.$route.name === "register"
+      !_vm.isRouteNameAuth(_vm.$route.name)
+        ? [
+            _c(
+              "v-app-bar",
+              { staticClass: "px-5", attrs: { app: "" } },
+              [
+                _c(
+                  "router-link",
+                  {
+                    class: { "green--text": _vm.$route.name === "home" },
+                    attrs: { to: { name: "home" } }
+                  },
+                  [_vm._v("Home")]
+                ),
+                _vm._v(" "),
+                _c("v-spacer"),
+                _vm._v(" "),
+                !_vm.is_authenticated
+                  ? [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "mr-5",
+                          class: { "green--text": _vm.$route.name === "login" },
+                          attrs: { to: { name: "login" } }
                         },
-                        attrs: { to: { name: "register" } }
-                      },
-                      [_vm._v("\n        Register\n      ")]
-                    )
-                  ]
-                : [
-                    _c(
-                      "v-btn",
-                      {
-                        attrs: { color: "error" },
-                        on: {
-                          click: function($event) {
-                            return _vm.logout()
+                        [_vm._v("\n          Login\n        ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          class: {
+                            "green--text": _vm.$route.name === "register"
+                          },
+                          attrs: { to: { name: "register" } }
+                        },
+                        [_vm._v("\n          Register\n        ")]
+                      )
+                    ]
+                  : [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "error" },
+                          on: {
+                            click: function($event) {
+                              return _vm.logout()
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("\n          Logout\n        ")]
-                    )
-                  ]
-            ],
-            2
-          )
+                        },
+                        [_vm._v("\n            Logout\n          ")]
+                      )
+                    ]
+              ],
+              2
+            )
+          ]
         : _vm._e()
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []

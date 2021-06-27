@@ -24,9 +24,12 @@ import vuetify    from './src/plugins/vuetify.js';
 import store      from './src/store/index.js';
 
 //* Mixins 
-import titleMixin from './src/mixins/titleMixin.js';
+import TitleMixin from './src/mixins/TitleMixin';
+import RouteTypeMixin from './src/mixins/RouteTypeMixin';
 
-Vue.mixin(titleMixin)
+//? Mixin must be separated
+Vue.mixin(TitleMixin);
+Vue.mixin(RouteTypeMixin)
 
 /**
  * The following block of code may be used to automatically register your

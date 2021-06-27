@@ -18,4 +18,20 @@ export default[
                                 middleware : [GuestMiddleware]
                             }
     },   
+    {
+        path        :       '/forgot-password', 
+        component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "forgot-password" */ "../../views/auth/ForgotPassword"),  
+        name        :       'forgot-password', 
+        meta        :       {
+                                middleware : [GuestMiddleware]
+                            }
+    },  
+    {
+        path        :       '/reset-password', 
+        component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "reset-password" */ "../../views/auth/ResetPassword"),  
+        name        :       'reset-password', 
+        meta        :       {
+                                middleware : [GuestMiddleware]
+                            }
+    },  
 ];

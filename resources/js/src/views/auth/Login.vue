@@ -26,8 +26,11 @@
                </v-form>
            </v-card-text>
            <v-card-actions>
-               <v-spacer></v-spacer>
-               <v-btn class='text-white' color="black" @click='submit()'>Login</v-btn>
+                <router-link :to="{name: 'forgot-password'}" class="text-success">
+                    Forgot Password?
+                </router-link> 
+                <v-spacer></v-spacer>
+                <v-btn class='text-white' color="black" @click='submit()'>Login</v-btn>
            </v-card-actions>
        </v-card>
     </div>

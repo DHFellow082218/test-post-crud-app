@@ -7,5 +7,7 @@
     "/js/NotFound.js": "/js/NotFound.js",
     "/js/navigation.js": "/js/navigation.js",
     "/js/footer.js": "/js/footer.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/forgot-password.js": "/js/forgot-password.js",
+    "/js/reset-password.js": "/js/reset-password.js"
 }
