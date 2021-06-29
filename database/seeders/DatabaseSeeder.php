@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //! If php artisan config:cache was ran
+        //! Run php artisan config:clear to load env varibles
         if(env('APP_DEBUG'))
         {
             $this->call([

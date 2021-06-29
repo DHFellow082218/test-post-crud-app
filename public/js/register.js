@@ -24,8 +24,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  title: 'Register'
+  title: 'Register',
+  data: function data() {
+    return {
+      credentials: []
+    };
+  },
+  methods: {
+    submit: function submit() {
+      alert("hello World");
+    }
+  }
 });
 
 /***/ }),
@@ -118,17 +178,164 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("v-container", [
-    _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h3", [_vm._v("Register")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("h4", [_vm._v("Hello World")])
-      ])
-    ])
-  ])
+  return _c(
+    "v-container",
+    [
+      _c(
+        "v-card",
+        {
+          staticClass: "mx-auto my-5 py-5",
+          attrs: { "max-width": "550", elevation: "2", outlined: "" }
+        },
+        [
+          _c(
+            "v-card-title",
+            { staticClass: "justify-center", attrs: { "primary-title": "" } },
+            [_vm._v("\n            Registration\n        ")]
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-text",
+            [
+              _c(
+                "v-form",
+                [
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Username",
+                      "prepend-icon": "mdi-card-account-details-star",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.credentials.name,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credentials, "name", $$v)
+                      },
+                      expression: "credentials.name"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      label: "Email",
+                      "prepend-icon": "mdi-email",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.credentials.email,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credentials, "email", $$v)
+                      },
+                      expression: "credentials.email"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "password",
+                      label: "Password",
+                      "prepend-icon": "mdi-lock",
+                      "append-icon": "mdi-eye",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.credentials.password,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credentials, "password", $$v)
+                      },
+                      expression: "credentials.password"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("v-text-field", {
+                    attrs: {
+                      type: "password",
+                      label: "Confirm Password",
+                      "prepend-icon": "mdi-lock",
+                      required: ""
+                    },
+                    model: {
+                      value: _vm.credentials.password_confirmation,
+                      callback: function($$v) {
+                        _vm.$set(_vm.credentials, "password_confirmation", $$v)
+                      },
+                      expression: "credentials.password_confirmation"
+                    }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "v-card-actions",
+            [
+              _c(
+                "v-row",
+                [
+                  _c(
+                    "v-col",
+                    {
+                      staticClass: "d-flex justify-center",
+                      attrs: { cols: "12" }
+                    },
+                    [
+                      _c(
+                        "v-btn",
+                        {
+                          attrs: { color: "success", width: "350px" },
+                          on: {
+                            click: function($event) {
+                              return _vm.submit()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Register\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-col",
+                    {
+                      staticClass: "d-flex justify-center",
+                      attrs: { cols: "12" }
+                    },
+                    [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "text-info",
+                          attrs: { to: { name: "login" } }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Already have an account? Login\n                    "
+                          )
+                        ]
+                      )
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

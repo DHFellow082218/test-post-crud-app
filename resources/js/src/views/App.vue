@@ -10,79 +10,79 @@
   </v-app>
 </template>
 
-<script>  
-  export default 
+<script>
+  export default
   {
     title: 'Foo Page',
-    components              : 
+    components              :
     {
-        TheNavigation: () => import(/* webpackPrefetch: true, webpackChunkName: "navigation" */ './layouts/TheNavigation.vue'), 
-        TheFooter    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'), 
+        TheNavigation: () => import(/* webpackPrefetch: true, webpackChunkName: "navigation" */ './layouts/TheNavigation.vue'),
+        TheFooter    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'),
     },
   }
 </script>
 
 <style scoped>
-  .slide-enter-active, 
+  .slide-enter-active,
   .slide-leave-active
   {
-    transition: opacity 1s, transform 1s; 
+    transition: opacity 1s, transform 1s;
   }
 
-  .slide-enter, 
+  .slide-enter,
   .slide-leave-to
   {
-    opacity: 0; 
-    transform: translateX(-30%); 
+    opacity: 0;
+    transform: translateX(-30%);
   }
 
-  .fade-enter-active, 
+  .fade-enter-active,
   .fade-leave-active
   {
-    transition: opacity 0.2s ease; 
+    transition: opacity 0.2s ease;
   }
 
-  .fade-enter, 
+  .fade-enter,
   .fade-leave-to
   {
-    opacity: 0; 
+    opacity: 0;
   }
 
   .moveUp-enter-active
   {
-    animation: fadeIn 0.5s ease-in; 
+    animation: fadeIn 0.5s ease-in;
   }
 
-  @keyframes fadeIn 
+  @keyframes fadeIn
   {
-    0% 
+    0%
     {
-      opacity : 0; 
+      opacity : 0;
     }
-    50% 
+    50%
     {
-      opacity : 0.5; 
+      opacity : 0.5;
     }
-    100% 
+    100%
     {
-      opacity : 1; 
+      opacity : 1;
     }
   }
 
-  @keyframes moveUp 
+  @keyframes moveUp
   {
-    0% 
+    0%
     {
-      transform : translateY(0); 
-    }  
-    100% 
+      transform : translateY(0);
+    }
+    100%
     {
       transform : translateY(-400px);
     }
   }
-  
+
   .moveUp-leave-active
   {
-    animation  : moveUp 0.3s ease-in; 
+    animation  : moveUp 0.3s ease-in;
   }
 </style>
