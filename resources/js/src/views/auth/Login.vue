@@ -1,12 +1,18 @@
 <template>
     <div>
-       <alert-message 
+       <alert-message
         :message='alertMessage.content'
         :type='alertMessage.type'
         :visible='alertMessage.hasMessage'
         />
-       <v-card width="550px" class="mx-auto my-10">
-           <v-card-title class="">
+       <v-card
+            class="mx-auto my-10"
+            max-width="550px"
+            elevation="2">
+           <v-card-title
+                primary-title
+                class="justify-center"
+           >
                Login
            </v-card-title>
            <v-card-text>
@@ -17,8 +23,8 @@
                     prepend-icon="mdi-email"
                     />
                    <v-text-field
-                    type="password"
                     v-model="credentials.password"
+                    type="password"
                     label="Password"
                     prepend-icon="mdi-lock"
                     append-icon="mdi-eye-off"
@@ -28,7 +34,7 @@
            <v-card-actions>
                 <router-link :to="{name: 'forgot-password'}" class="text-success">
                     Forgot Password?
-                </router-link> 
+                </router-link>
                 <v-spacer></v-spacer>
                 <v-btn class='text-white' color="black" @click='submit()'>Login</v-btn>
            </v-card-actions>
@@ -37,15 +43,16 @@
 </template>
 
 <script>
-  
-import {mapState, mapGetters, mapActions} from "vuex"; 
+
+import {mapState, mapGetters, mapActions} from "vuex";
 import AlertMessage from '../../components/AlertMessage'
 
-export default 
+export default
 {
     title: 'Login',
 
-    components: {
+    components:
+    {
         AlertMessage
     },
     data : () => (
@@ -53,37 +60,37 @@ export default
             credentials  : [],
         }
     ),
-    computed: 
+    computed:
     {
-         ...mapGetters('auth', 
+         ...mapGetters('auth',
             {
                 alertMessage : 'get_message'
             }
         ),
-    },     
-    methods: 
+    },
+    methods:
     {
         ...mapActions(
             'auth',
             [
                 'login',
             ]
-        ), 
+        ),
 
         submit()
         {
             this.login(this.credentials)
-                .then((res) => 
+                .then((res) =>
                     {
-                        this.$router.replace({name : 'home'}); 
+                        this.$router.replace({name : 'home'});
                     }
                 )
-                .catch((err) => 
+                .catch((err) =>
                     {
-                        console.log(err); 
+                        console.log(err);
                     }
                 );
-        } 
+        }
     }
 }
 </script>

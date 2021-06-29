@@ -106,6 +106,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -357,9 +363,16 @@ var render = function() {
       _vm._v(" "),
       _c(
         "v-card",
-        { staticClass: "mx-auto my-10", attrs: { width: "550px" } },
+        {
+          staticClass: "mx-auto my-10",
+          attrs: { "max-width": "550px", elevation: "2" }
+        },
         [
-          _c("v-card-title", {}, [_vm._v("\n           Login\n       ")]),
+          _c(
+            "v-card-title",
+            { staticClass: "justify-center", attrs: { "primary-title": "" } },
+            [_vm._v("\n           Login\n       ")]
+          ),
           _vm._v(" "),
           _c(
             "v-card-text",
