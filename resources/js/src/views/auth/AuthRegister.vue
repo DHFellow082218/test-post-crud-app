@@ -3,8 +3,6 @@
         <v-card
             class="mx-auto my-5 py-5"
             max-width="550"
-            elevation="2"
-            outlined
         >
             <v-card-title
                 primary-title
@@ -13,13 +11,15 @@
                 Registration
             </v-card-title>
             <v-card-text>
-                <v-form>
+                <v-form @submit="e.prevent.default()" class="py-5">
                     <v-row>
                         <v-col cols="12">
                             <v-text-field
                                 v-model="credentials.name"
                                 label="Username"
-                                prepend-icon="mdi-card-account-details-star"
+                                prepend-inner-icon="mdi-card-account-details-star-outline"
+                                dense
+                                outlined
                                 required
                             />
                         </v-col>
@@ -27,7 +27,9 @@
                             <v-text-field
                                 v-model="credentials.email"
                                 label="Email"
-                                prepend-icon="mdi-email"
+                                prepend-inner-icon="mdi-email-outline"
+                                dense
+                                outlined
                                 required
                             />
                         </v-col>
@@ -36,8 +38,10 @@
                                 type="password"
                                 v-model="credentials.password"
                                 label="Password"
-                                prepend-icon="mdi-lock"
-                                append-icon="mdi-eye"
+                                prepend-inner-icon="mdi-lock-outline"
+                                append-icon="mdi-eye-off-outline"
+                                dense
+                                outlined
                                 required
                             />
                         </v-col>
@@ -46,7 +50,9 @@
                                 type="password"
                                 v-model="credentials.password_confirmation"
                                 label="Confirm Password"
-                                prepend-icon="mdi-lock"
+                                prepend-inner-icon="mdi-lock-check-outline"
+                                dense
+                                outlined
                                 required
                             />
                         </v-col>
@@ -87,6 +93,5 @@
                 alert("hello World");
             }
         }
-
     }
 </script>
