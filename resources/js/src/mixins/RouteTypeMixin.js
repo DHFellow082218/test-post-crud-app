@@ -1,4 +1,4 @@
-const authRoutes    =   ['register', 'login', 'forgot-password'];
+const authRoutes    =   ['auth.register', 'auth.login', 'auth.forgot-password'];
 
 export default
 {

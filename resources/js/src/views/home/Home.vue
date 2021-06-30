@@ -11,6 +11,7 @@
                 </v-card-text>
             </v-card>
         </div>
+        <router-view></router-view>
     </v-container>
 </template>
 

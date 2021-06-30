@@ -1,4 +1,5 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://127.0.0.1/api";
+
+axios.defaults.baseURL = process.env.MIX_API_EXTERNAL_URL;
 //axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');

@@ -7,30 +7,16 @@ export default(
         {
             user         : null,
             token        : null, 
-            alertMessage :  {
-                                "hasMessage" : false, 
-                                "content"    : null, 
-                                "type"       : "success", 
-                            }, 
         },
         getters:
         {
-            is_authenticated : state => state.token && state.user, 
-            get_user         : state => state.user, 
-            get_message      : state => state.alertMessage
+            getToken     : state => state.token, 
+            getUser      : state => state.user, 
         },
         actions: 
         {
             async login({dispatch, commit}, credentials)
             {
-                commit('SET_MESSAGE', 
-                        {
-                            "hasMessage" : false, 
-                            "content"    : "", 
-                            "type"       : "error"
-                        }
-                    );
-
                 try 
                 {
                     const response  =   await axios.post("auth/login", 
@@ -43,25 +29,17 @@ export default(
                     return dispatch('attempt', response.data.data.token);                 
                 }
                 catch(error)
-                {
-                    commit('SET_MESSAGE', 
-                        {
-                            "hasMessage" : true, 
-                            "content"    : "Login Credentials Invalid", 
-                            "type"       : "error"
-                        }
-                    );
-                    
+                {    
                     throw('Login Credentials Invalid')
                 } 
 
             },
 
-            async attempt({state, dispatch, commit}, token)
+            async attempt({state, commit}, token)
             {               
                 if(token)
                 {
-                    commit('SET_TOKEN', token); 
+                    commit('setToken', token); 
                 } 
                 
                 if(!state.token)
@@ -73,33 +51,24 @@ export default(
                 {
                     const response      =    await axios.get("auth/profile");
                     
-                    commit('SET_USER', response.data.data.item); 
+                    commit('setUser', response.data.data.item); 
                 } 
                 catch(error) 
                 {
-                    commit('SET_TOKEN', null); 
-                    commit('SET_USER', null); 
+                    commit('setToken', null); 
+                    commit('setUser', null); 
 
-                    commit('SET_MESSAGE', 
-                        {
-                            "hasMessage" : true, 
-                            "content"    : "Login Attempt Failed", 
-                            "type"       : "error"
-                        }
-                    );
-
-                    throw('Authentication Failed')
+                    throw('Authentication Failed');
                 }
             },
 
             logout({dispatch, commit})
             {
-
                 return axios.post('auth/logout')
                             .then((res) => 
                                 {
-                                    commit('SET_TOKEN', null); 
-                                    commit('SET_USER', null); 
+                                    commit('setToken', null); 
+                                    commit('setUser', null); 
 
                                     return res; 
                                 }
@@ -113,20 +82,15 @@ export default(
         }, 
         mutations:
         {
-           SET_TOKEN(state, data) 
+           setToken(state, data) 
            {
                state.token = data;
            }, 
 
-           SET_USER(state, data)
+           setUser(state, data)
            {
                state.user = data;
            },
-
-           SET_MESSAGE(state, msg)
-           {
-                state.alertMessage = msg
-           }
         },
     }
 )

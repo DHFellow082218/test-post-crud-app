@@ -1,8 +1,6 @@
 <template>
     <div>
-        <v-footer>
-            Copyright DHFellow082218
-        </v-footer>
+        Copyright DHFellow082218
     </div>
 </template>
 

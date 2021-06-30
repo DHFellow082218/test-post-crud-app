@@ -30,4 +30,24 @@ export const path = {
         return url
     }
 }
+
+import axios from 'axios'
+import Vuex from 'vuex'
+import Vue from 'vue'
+
+
+//load Vuex
+Vue.use(Vuex);
+
+export const path = {
+    namespaced: true,
+    state: () => ({
+        fileUrl: 'https://spcfstorageaccount.blob.core.windows.net/storage/public',
+        placeHolderUrl: 'https://spcfstorageaccount.blob.core.windows.net/public',
+        localFileUrl: '/storage',
+        localPlaceHolderUrl: '../images'
+    }),
+}
+
+
 */

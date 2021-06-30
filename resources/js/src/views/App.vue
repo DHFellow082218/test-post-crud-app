@@ -1,12 +1,16 @@
 <template>
   <v-app id="inspire">
-    <the-navigation/>
+    <header>
+      <the-header/>
+    </header>
     <v-main>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.path"/>
       </transition>
     </v-main>
-    <the-footer/>
+    <v-footer>
+      <the-footer/>
+    </v-footer>
   </v-app>
 </template>
 
@@ -16,8 +20,8 @@
     title: 'Foo Page',
     components              :
     {
-        TheNavigation: () => import(/* webpackPrefetch: true, webpackChunkName: "navigation" */ './layouts/TheNavigation.vue'),
         TheFooter    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'),
+        TheHeader    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheHeader.vue'),
     },
   }
 </script>
