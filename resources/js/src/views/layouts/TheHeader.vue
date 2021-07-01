@@ -5,7 +5,7 @@
         <!--  <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
         <router-link :to="{name: 'home'}"     :class="{'green--text' : $route.name === 'home'}">Home</router-link>
         <v-spacer></v-spacer>
-        <template v-if="!is_authenticated">
+        <template v-if="!isAuthenticated()">
           <router-link :to="{name: 'auth.login'}"    :class="{'green--text' : $route.name === 'auth.login'}" class="mr-5">
             Login
           </router-link>

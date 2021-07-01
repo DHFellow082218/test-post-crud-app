@@ -17,20 +17,22 @@ require('./src/utils/subscriber');
 //require('./src/utils/reauthenticate');
 
 //* Components 
-import App        from './src/views/App.vue';
+import App from './src/views/App.vue';
 
 //* Libraries | Packages 
-import router     from './src/router/index.js'; 
-import vuetify    from './src/plugins/vuetify.js';
-import store      from './src/store/index.js';
+import router  from './src/router/index.js'; 
+import vuetify from './src/plugins/vuetify.js';
+import store   from './src/store/index.js';
 
 //* Mixins 
-import TitleMixin from './src/mixins/TitleMixin';
+import AuthMixin      from './src/mixins/AuthMixin';
 import RouteTypeMixin from './src/mixins/RouteTypeMixin';
+import TitleMixin     from './src/mixins/TitleMixin';
 
 //? Mixin must be separated
+Vue.mixin(AuthMixin); 
+Vue.mixin(RouteTypeMixin);
 Vue.mixin(TitleMixin);
-Vue.mixin(RouteTypeMixin)
 
 /**
  * The following block of code may be used to automatically register your
