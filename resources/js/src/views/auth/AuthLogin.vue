@@ -1,25 +1,25 @@
 <template>
     <v-container>
         <v-card
-            class="mx-auto my-5 py-5"
+            class="mx-auto my-5 px-5"
             max-width="550"
         >
             <v-card-title
                 primary-title
-                class="justify-center"
+                class="justify-center py-5"
             >
                 Login
             </v-card-title>
-            <v-card-text>
-                <v-form @submit="e.prevent.default()" class="py-5">
+            <v-card-text class="pt-10 pb-5 border-top border-bottom">
+                <v-form @submit="e.prevent.default()" ref="form">
                     <v-row>
                         <v-col cols="12">
                             <v-text-field
                                 v-model="credentials.email"
                                 label="Email"
-                                :rules="this.rules.required('Email')"
                                 dense 
                                 prepend-inner-icon="mdi-email-outline"
+                                :rules="[this.rules.required('Email'), this.rules.email()]"
                                 outlined
                             />
                         </v-col>
@@ -31,13 +31,14 @@
                                 dense
                                 prepend-inner-icon="mdi-lock-outline"
                                 append-icon="mdi-eye-off-outline"
+                                :rules="[this.rules.required('Password')]"
                                 outlined
                             />
                         </v-col>
                     </v-row>
                 </v-form>
             </v-card-text>
-            <v-card-actions>
+            <v-card-actions class="py-5">
                     <v-row>
                         <v-col cols="12" class="d-flex justify-center">
                             <v-btn  
@@ -98,20 +99,14 @@ export default
 
         submit()
         {
-            console.log(this.rules);
-            /*
-            this.login(this.credentials)
-                .then((res) =>
-                    {
-                        this.$router.replace({name : 'home'});
-                    }
-                )
-                .catch((err) =>
-                    {
-                        console.log(err);
-                    }
-                );
-            */
+            if(this.$refs.form.validate())
+            {
+                alert('validated');
+            }
+            else
+            {
+                alert('form errors');
+            }
         }
     }
 }
