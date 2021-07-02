@@ -4,6 +4,7 @@
       <the-header/>
     </header>
     <v-main>
+      <app-alert-message/>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.path"/>
       </transition>
@@ -20,8 +21,9 @@
     title: 'Foo Page',
     components              :
     {
-        TheFooter    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'),
-        TheHeader    : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheHeader.vue'),
+        TheFooter       : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheFooter.vue'),
+        TheHeader       : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ './layouts/TheHeader.vue'),
+        AppAlertMessage : () => import(/* webpackPrefetch: true, webpackChunkName: "footer" */ '../components/AppAlertMessage.vue'),
     },
   }
 </script>

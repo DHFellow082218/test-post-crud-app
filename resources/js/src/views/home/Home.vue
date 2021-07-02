@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <v-btn @click="index">Fetch Posts</v-btn>
+        <v-btn @click="getPosts">Fetch Posts</v-btn>
         <div v-for="post in posts" :key="post.id">
             <v-card class='my-5'>
                 <v-card-title>
@@ -45,11 +45,23 @@ export default
     methods: 
     {
         ...mapActions(
-            'post',
-            [
-                'index',
-            ]
-        )
+            {
+                fetchPosts : 'post/index', 
+                showAlertMessage : 'alertMessage/showAlertMessage'
+            }
+        ), 
+
+        getPosts()
+        {
+            this.fetchPosts();
+ 
+            this.showAlertMessage(
+                {
+                    message : "Posts Fetched", 
+                    type    : "info", 
+                }
+            ) 
+        }
     }
 }
 </script>

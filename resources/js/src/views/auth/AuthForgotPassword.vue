@@ -31,8 +31,8 @@
                         <v-col cols="12" class="d-flex justify-center">
                             <v-btn  
                                 color="success" 
+                                block
                                 @click='submit()'
-                                width="500"
                             >
                                 Send Password Reset Email
                             </v-btn>
@@ -49,7 +49,7 @@
 </template>
 
 <script>
-    import rules from "../../utils/FormRulesUtil";
+    import {rules} from "../../utils/FormUtil";
 
     export default 
     {

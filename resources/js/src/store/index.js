@@ -5,9 +5,9 @@ import createPersistedState from 'vuex-persistedstate';
 import Cookies from 'js-cookie';
 
 //* Modules 
-import post from './modules/post'; 
-import auth from './modules/auth';
-import alertMessage from './modules/alertMessage';
+import post from './modules/PostModule'; 
+import auth from './modules/AuthModule';
+import alertMessage from './modules/AlertMessageModule';
 
 Vue.use(Vuex); 
 

@@ -19,8 +19,9 @@
                                 label="Email"
                                 dense 
                                 prepend-inner-icon="mdi-email-outline"
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
                                 outlined
+                                :rules="[this.rules.required('Email'), this.rules.email()]"
+                                @blur="this.toLowerCase(e, this.credentials.email)"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -43,8 +44,8 @@
                         <v-col cols="12" class="d-flex justify-center">
                             <v-btn  
                                 color="success" 
+                                block
                                 @click='submit()'
-                                width="500"
                             >
                                 Login
                             </v-btn>
@@ -63,7 +64,7 @@
 <script>
 
 import {mapState, mapGetters, mapActions} from "vuex";
-import rules from "../../utils/FormRulesUtil"; 
+import {rules, filters} from "../../utils/FormUtil"; 
 
 export default
 {
@@ -90,22 +91,32 @@ export default
     },
     methods:
     {
+        ...filters, 
         ...mapActions(
-            'auth',
-            [
-                'login',
-            ]
+            {
+                login            : "auth/login", 
+                showAlertMessage : "alertMessage/showAlertMessage"
+            }
         ),
-
         submit()
         {
             if(this.$refs.form.validate())
             {
-                alert('validated');
+                this.showAlertMessage(
+                    {
+                        message : "Proceed with Login Process", 
+                        type    : "info", 
+                    }
+                ) 
             }
             else
             {
-                alert('form errors');
+                this.showAlertMessage(
+                    {
+                        message : "Form Errors", 
+                        type    : "error", 
+                    }
+                )
             }
         }
     }

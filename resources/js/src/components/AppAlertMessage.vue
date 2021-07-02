@@ -1,14 +1,14 @@
 <template>
     <div>
         <v-alert 
-            class='text-center mx-auto my-10'
+            class='mx-auto my-5'
             width="40%"
-            elevation=5
+            elevation="1"
             dismissible
-            transition="scale-transition"
-            :border="border"
-            :type='type' 
-            :value='visible'
+            transition="scale-transition"   
+            @input="this.close"
+            :type="type" 
+            :value="visible"
         >
             {{message}}
         </v-alert> 
@@ -16,17 +16,39 @@
 </template>
 
 <script>
-    import {mapGetters} from "vuex"; 
+    import {mapState, mapGetters, mapActions} from "vuex"; 
 
     export default 
     {
         computed    : 
         {
-            ...mapGetters('auth',
-                {
-                    alertMessage : 'get_message'
-                }
+            ...mapState('alertMessage',
+                [
+                    'message',  
+                    'type',
+                    'visible'
+                ]
             ),
+            ...mapGetters('alertMessage',
+                [
+                    'getMessage', 
+                    'getType', 
+                    'isVisible'
+                ]
+            ),
+        },
+        methods  : 
+        {
+            ...mapActions('alertMessage', 
+                [
+                    'destroyAlertMessage'
+                ]
+            ), 
+
+            close()
+            {
+                this.destroyAlertMessage(); 
+            }
         }
     }
 </script>

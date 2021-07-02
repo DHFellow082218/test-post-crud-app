@@ -21,7 +21,6 @@
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined
-                                required
                             />
                         </v-col>
                         <v-col cols="12">
@@ -32,7 +31,7 @@
                                 :rules="[this.rules.required('Email'), this.rules.email()]"
                                 dense
                                 outlined
-                                required
+                                @blur="this.toLowerCase"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -45,7 +44,6 @@
                                 :rules="[this.rules.required('Password'), this.rules.minLength({fieldName:'Password', length:8})]"
                                 dense
                                 outlined
-                                required
                             />
                         </v-col>
                         <v-col cols="12">
@@ -57,7 +55,6 @@
                                 :rules="[this.rules.required(), this.rules.equals(this.credentials.password, 'Passwords')]"
                                 dense
                                 outlined
-                                required
                             />
                         </v-col>
                     </v-row>
@@ -66,7 +63,7 @@
             <v-card-actions class="py-5">
                 <v-row>
                     <v-col cols="12" class="d-flex justify-center">
-                        <v-btn color="success" width="500px" @click="submit()">
+                        <v-btn color="success" block @click="submit()">
                             Register
                         </v-btn>
                     </v-col>
@@ -82,7 +79,7 @@
 </template>
 
 <script>
-    import rules from "../../utils/FormRulesUtil"; 
+    import {rules, filters} from "../../utils/FormUtil"; 
 
     export default
     {
@@ -95,6 +92,7 @@
         ),
          methods:
         {
+            ...filters,
             submit()
             {
                 if(this.$refs.form.validate()) 
