@@ -21,6 +21,7 @@
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined
+                                :error-messages="errors.name"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -31,6 +32,7 @@
                                 :rules="[this.rules.required('Email'), this.rules.email()]"
                                 dense
                                 outlined
+                                :error-messages="errors.email"
                                 @blur="this.toLowerCase"
                             />
                         </v-col>
@@ -79,6 +81,7 @@
 </template>
 
 <script>
+    import {mapActions} from "vuex";
     import {rules, filters} from "../../utils/FormUtil"; 
 
     export default
@@ -87,21 +90,73 @@
         data    :   ()  => (
             {
                 credentials     :   [], 
+                errors          :   [], 
                 rules      
             }
         ),
          methods:
         {
             ...filters,
+
+            ...mapActions(
+                {
+                    register         : "auth/register", 
+                    showAlertMessage : "alertMessage/showAlertMessage"
+                }
+            ), 
+
             submit()
             {
-                if(this.$refs.form.validate()) 
+                if(this.$refs.form.validate())
                 {
-                    alert('Validated'); 
-                } 
-                else 
+                    this.register(this.credentials) 
+                        .then(response => 
+                            {
+                                this.showAlertMessage(
+                                    {
+                                        message : "User Successfully Registered", 
+                                        type    : "success", 
+                                    }
+                                )
+
+                                this.$router.push({name : 'auth.login'}); 
+                            }
+                        )
+                        .catch(error => 
+                            {                                
+                                this.setErrors(error.errors); 
+
+                                this.showAlertMessage(
+                                    {
+                                        message : error.message, 
+                                        type    : "error", 
+                                    }
+                                )
+                            }
+                        );
+                }
+                else
                 {
-                    alert('Not Validated'); 
+                    this.showAlertMessage(
+                        {
+                            message : "Please fill up the form correctly", 
+                            type    : "error", 
+                        }
+                    )
+                }
+
+            },
+
+            setErrors(errors)
+            {
+                if(errors.name)
+                {
+                    this.errors.name =  errors.name[0];       
+                }
+
+                if(errors.email)
+                {
+                    this.errors.email =  errors.email[0]; 
                 }
             }
         }

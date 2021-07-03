@@ -24,7 +24,7 @@ class RegisterRequest extends ResponseRequest
     public function rules()
     {
         return [
-            'name'     => ['required', 'string', 'between:2,100'],
+            'name'     => ['required', 'string', 'between:2,100', 'unique:users,name'],
             'email'    => ['required', 'string', 'email', 'max:100', 'unique:users'],
             'password' => ['required', 'string', 'confirmed', 'min:6'],
         ];

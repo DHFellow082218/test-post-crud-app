@@ -1,6 +1,7 @@
 <template>
     <v-container>
-        <v-btn @click="getPosts">Fetch Posts</v-btn>
+        <v-btn @click="getPosts" color="primary">Fetch Posts</v-btn>
+        <v-btn @click="removePost" color="error">Remove Posts</v-btn>
         <div v-for="post in posts" :key="post.id">
             <v-card class='my-5'>
                 <v-card-title>
@@ -34,33 +35,54 @@ export default
                 posts: state => state.items
             }
         ),
-
-        ...mapGetters(
-            'post',
-            {
-                posts: 'asc'
-            }
-        ),  
     },     
     methods: 
     {
         ...mapActions(
             {
-                fetchPosts : 'post/index', 
-                showAlertMessage : 'alertMessage/showAlertMessage'
+                fetchPosts          : 'post/fetchAll', 
+                removePosts         : 'post/remove',  
+                showAlertMessage    : 'alertMessage/showAlertMessage'
             }
         ), 
 
         getPosts()
         {
-            this.fetchPosts();
- 
-            this.showAlertMessage(
-                {
-                    message : "Posts Fetched", 
-                    type    : "info", 
-                }
-            ) 
+            this.fetchPosts()
+                .then(res => 
+                    {
+                        this.showAlertMessage(
+                            {
+                                "message" : "Posts successfully fetched", 
+                                "type"    : "success" 
+                            }
+                        )
+                    }
+                )
+                .catch(err => 
+                    {
+                        console.log(err);
+                        this.showAlertMessage(
+                            {
+                                "message" : err, 
+                                "type"    : 'error' 
+                            }
+                        )
+                    }
+                );           
+
+        }, 
+
+        removePost() 
+        {
+            this.removePosts();
+
+               this.showAlertMessage(
+                    {
+                        "message" : 'Posts Removed', 
+                        "type"    : 'info' 
+                    }
+                )
         }
     }
 }

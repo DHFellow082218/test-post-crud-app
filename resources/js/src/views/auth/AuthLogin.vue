@@ -21,7 +21,7 @@
                                 prepend-inner-icon="mdi-email-outline"
                                 outlined
                                 :rules="[this.rules.required('Email'), this.rules.email()]"
-                                @blur="this.toLowerCase(e, this.credentials.email)"
+                                @blur="this.toLowerCase"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -102,18 +102,35 @@ export default
         {
             if(this.$refs.form.validate())
             {
-                this.showAlertMessage(
-                    {
-                        message : "Proceed with Login Process", 
-                        type    : "info", 
-                    }
-                ) 
+                this.login(this.credentials) 
+                    .then(response => 
+                        {
+                            this.showAlertMessage(
+                                {
+                                    message : "Login Successful", 
+                                    type    : "success", 
+                                }
+                            )
+
+                            this.$router.push({name : 'home'}); 
+                        }
+                    )
+                    .catch(error => 
+                        {
+                             this.showAlertMessage(
+                                {
+                                    message : error.message, 
+                                    type    : "error", 
+                                }
+                            )
+                        }
+                    ); 
             }
             else
             {
                 this.showAlertMessage(
                     {
-                        message : "Form Errors", 
+                        message : "Please fill up the form correctly", 
                         type    : "error", 
                     }
                 )

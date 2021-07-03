@@ -7,38 +7,37 @@ export default(
         },
         getters:
         {
-            asc(state, getters)
-            {
-                return state.items.sort((a, b) => a.title < b.title);
-            } 
+            getItems: state => state.items
         },
         actions: 
         {
-            index(context)
+            async fetchAll({commit})
             {
-                axios.get('posts')
-                .then((response) =>  
-                    {
-                        context.commit('setPosts', response.data.data.item); 
-                    }
-                )
-                 .catch((error) => 
-                    {
-                        if (error.response) 
-                        {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        }
-                    }
-                );
+                const response = await axios.get('posts').catch(error => 
+                {
+                    console.log(error); 
+                });
+
+                if(!response)
+                {
+                    throw('Posts could not be Fetched'); 
+                }
+
+                commit('setItems', response.data.data.item); 
+
+                return response; 
+            }, 
+            
+            remove({commit})
+            {
+                commit('setItems', null); 
             }
         }, 
         mutations:
         {
-            setPosts(state, posts = "Hello World")
+            setItems(state, payload)
             {
-                state.items = posts; 
+                state.items = payload; 
             }
         },
     }

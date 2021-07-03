@@ -4,16 +4,40 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\ApiController;
 use App\Services\Auth\AuthService;
+use JWTAuth;
 
 class RefreshController extends ApiController
 {
     public function __construct()
     {
-        $this->middleware('jwt.verify');
+        //$this->middleware('jwt.verify');
     }
 
     public function __invoke()
     {
-        return AuthService::respondWithToken(auth()->refresh());
+        try
+        {
+            $user = JWTAuth::parseToken()->authenticate();
+        }
+        catch (\Exception $e)
+        {
+            if($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException)
+            {
+                return AuthService::respondWithToken(auth()->refresh());
+            }
+
+            if($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException)
+            {
+                return response()->json(['status' => 'Token is Blacklisted'], 400);
+            }
+
+
+            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException)
+            {
+                return response()->json(['status' => 'Token is Invalid'], 403);
+            }
+
+            return response()->json(['status' => 'Authorization Token not found'], 404);
+        }
     }
 }

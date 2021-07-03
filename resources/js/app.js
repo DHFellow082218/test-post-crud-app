@@ -53,17 +53,19 @@ Vue.mixin(TitleMixin);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-store.dispatch('auth/attempt', localStorage.getItem('token'))
-    .then(() => 
-        {
-            const app = new Vue(
-                {
-                    el          : '#app',
-                    components  : {App}, 
-                    router      : router,
-                    vuetify     : vuetify, 
-                    store       : store, 
-                }
-            );
-        }
-    );
+/* 
+Vuex.Store.prototype.$axios = axiosInstance
+Vuex.Store.prototype.$router = router
+Vuex.Store.prototype.$auth = auth
+Vuex.Store.prototype.$path = path
+ */
+
+const app = new Vue(
+    {
+        el          : '#app',
+        components  : {App}, 
+        router      : router,
+        vuetify     : vuetify, 
+        store       : store, 
+    }
+);

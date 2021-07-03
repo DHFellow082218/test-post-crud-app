@@ -58,7 +58,7 @@
             {
               if(res.data.success)
               {
-                this.$router.replace({name : 'login'})
+                this.$router.replace({name : 'auth.login'})
               } 
               else 
               {
