@@ -47,7 +47,8 @@
     {
       ...mapActions(
         {
-          logoutAction : "auth/logout"
+          logoutAction      : "auth/logout", 
+          showAlertMessage  : 'alertMessage/showAlertMessage'
         }
       ),
 
@@ -58,11 +59,18 @@
             {
               if(res.data.success)
               {
+                this.showAlertMessage(
+                  {
+                      "message" : res.data.message, 
+                      "type"    : "info" 
+                  }
+                ); 
+
                 this.$router.replace({name : 'auth.login'})
               } 
               else 
               {
-                console.log('error'); 
+                  store.dispatch("alertMessage/destroyAlertMessage");
               }
             }
           )

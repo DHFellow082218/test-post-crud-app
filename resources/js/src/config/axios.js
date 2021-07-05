@@ -22,6 +22,7 @@ axiosInstance.interceptors.request.use(config =>
 */
 
 
+//* Interceptors
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -45,8 +46,6 @@ axios.interceptors.response.use(response =>
     err => 
     {
         const originalRequest = err.config;
-
-        console.log('request error')
 
         if (err.response.status === 401 && !originalRequest._retry) 
         {
@@ -112,5 +111,5 @@ axios.interceptors.response.use(response =>
     }
 );
 
-//* Interceptors
+//* Defaults
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');

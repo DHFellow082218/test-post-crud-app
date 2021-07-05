@@ -1,17 +1,21 @@
 <template>
   <v-app id="inspire">
-    <header>
-      <the-header/>
-    </header>
+    <template v-if="!isRouteNameError($route.name)">
+      <header>
+        <the-header/>
+      </header>
+    </template>
     <v-main>
       <app-alert-message/>
       <transition name="fade" mode="out-in">
         <router-view :key="$route.path"/>
       </transition>
     </v-main>
-    <v-footer>
-      <the-footer/>
-    </v-footer>
+     <template v-if="!isRouteNameError($route.name)">
+      <footer>
+        <the-footer/>
+      </footer>
+    </template>
   </v-app>
 </template>
 

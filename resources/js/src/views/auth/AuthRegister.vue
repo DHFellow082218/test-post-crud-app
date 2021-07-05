@@ -6,7 +6,7 @@
         >
             <v-card-title
                 primary-title
-                class="justify-center py-5"
+                class="justify-center py-5 display-1"
             >
                 Registration
             </v-card-title>
@@ -21,7 +21,7 @@
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined
-                                :error-messages="errors.name"
+                                :error-messages="formErrors.name"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -32,20 +32,21 @@
                                 :rules="[this.rules.required('Email'), this.rules.email()]"
                                 dense
                                 outlined
-                                :error-messages="errors.email"
+                                :error-messages="formErrors.email"
                                 @blur="this.toLowerCase"
                             />
                         </v-col>
                         <v-col cols="12">
                             <v-text-field
-                                type="password"
+                                :type="showPassword ? 'text' : 'password'"
                                 v-model="credentials.password"
                                 label="Password"
                                 prepend-inner-icon="mdi-lock-outline"
-                                append-icon="mdi-eye-off-outline"
+                                :append-icon="showPassword ? 'mdi-eye-off-outline' :'mdi-eye'"
                                 :rules="[this.rules.required('Password'), this.rules.minLength({fieldName:'Password', length:8})]"
                                 dense
                                 outlined
+                                @click:append="() => (showPassword = !showPassword)"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -65,7 +66,11 @@
             <v-card-actions class="py-5">
                 <v-row>
                     <v-col cols="12" class="d-flex justify-center">
-                        <v-btn color="success" block @click="submit()">
+                        <v-btn color="success" 
+                            block 
+                            :loading="loading"
+                            @click="submit()"
+                        >
                             Register
                         </v-btn>
                     </v-col>
@@ -81,7 +86,7 @@
 </template>
 
 <script>
-    import {mapActions} from "vuex";
+    import {mapState, mapActions} from "vuex";
     import {rules, filters} from "../../utils/FormUtil"; 
 
     export default
@@ -90,50 +95,36 @@
         data    :   ()  => (
             {
                 credentials     :   [], 
-                errors          :   [], 
+                showPassword    :   String,
                 rules      
             }
         ),
+        computed:
+        {
+        
+            ...mapState(
+                'auth', 
+                {
+                    formErrors  : state => state.formErrors,
+                    loading     : state => state.loading,  
+                }
+            )
+            
+        }, 
          methods:
         {
             ...filters,
-
             ...mapActions(
                 {
                     register         : "auth/register", 
                     showAlertMessage : "alertMessage/showAlertMessage"
                 }
             ), 
-
             submit()
             {
                 if(this.$refs.form.validate())
                 {
-                    this.register(this.credentials) 
-                        .then(response => 
-                            {
-                                this.showAlertMessage(
-                                    {
-                                        message : "User Successfully Registered", 
-                                        type    : "success", 
-                                    }
-                                )
-
-                                this.$router.push({name : 'auth.login'}); 
-                            }
-                        )
-                        .catch(error => 
-                            {                                
-                                this.setErrors(error.errors); 
-
-                                this.showAlertMessage(
-                                    {
-                                        message : error.message, 
-                                        type    : "error", 
-                                    }
-                                )
-                            }
-                        );
+                    this.register(this.credentials); 
                 }
                 else
                 {

@@ -27,12 +27,12 @@ import store   from './src/store/index.js';
 //* Mixins 
 import AuthMixin      from './src/mixins/AuthMixin';
 import RouteTypeMixin from './src/mixins/RouteTypeMixin';
-import TitleMixin     from './src/mixins/TitleMixin';
+import PageTitleMixin     from './src/mixins/PageTitleMixin';
 
 //? Mixin must be separated
 Vue.mixin(AuthMixin); 
 Vue.mixin(RouteTypeMixin);
-Vue.mixin(TitleMixin);
+Vue.mixin(PageTitleMixin);
 
 /**
  * The following block of code may be used to automatically register your

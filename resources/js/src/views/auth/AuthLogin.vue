@@ -6,7 +6,7 @@
         >
             <v-card-title
                 primary-title
-                class="justify-center py-5"
+                class="justify-center py-5 display-1"
             >
                 Login
             </v-card-title>
@@ -45,6 +45,7 @@
                             <v-btn  
                                 color="success" 
                                 block
+                                :loading="loading"
                                 @click='submit()'
                             >
                                 Login
@@ -81,13 +82,12 @@ export default
     ),
     computed:
     {
-        /*
-        ...mapGetters('auth',
+        ...mapState(
+            'auth', 
             {
-                alertMessage : 'get_message'
+                loading : state => state.loading
             }
-        ),
-        */
+        )
     },
     methods:
     {
@@ -102,29 +102,7 @@ export default
         {
             if(this.$refs.form.validate())
             {
-                this.login(this.credentials) 
-                    .then(response => 
-                        {
-                            this.showAlertMessage(
-                                {
-                                    message : "Login Successful", 
-                                    type    : "success", 
-                                }
-                            )
-
-                            this.$router.push({name : 'home'}); 
-                        }
-                    )
-                    .catch(error => 
-                        {
-                             this.showAlertMessage(
-                                {
-                                    message : error.message, 
-                                    type    : "error", 
-                                }
-                            )
-                        }
-                    ); 
+                this.login(this.credentials); 
             }
             else
             {

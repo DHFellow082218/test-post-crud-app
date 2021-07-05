@@ -6,7 +6,7 @@
         >
             <v-card-title
                 primary-title
-                class="justify-center py-5"
+                class="justify-center py-5 display-1"
             >
                 Forgot Password?
             </v-card-title>
@@ -20,6 +20,8 @@
                                 dense
                                 prepend-inner-icon="mdi-email-outline"
                                 :rules="[this.rules.required('Email'), this.rules.email()]"
+                                :error-messages="formErrors.email"
+                                @blur="this.toLowerCase"
                                 outlined
                             />
                         </v-col>
@@ -33,6 +35,7 @@
                                 color="success" 
                                 block
                                 @click='submit()'
+                                :loading="loading"
                             >
                                 Send Password Reset Email
                             </v-btn>
@@ -49,7 +52,8 @@
 </template>
 
 <script>
-    import {rules} from "../../utils/FormUtil";
+    import {mapState, mapActions} from "vuex"; 
+    import {rules, filters} from "../../utils/FormUtil";
 
     export default 
     {
@@ -60,17 +64,38 @@
                 rules
             }
         ),
+        computed : 
+        {
+            ...mapState('auth',
+                {
+                    loading     :   state   =>  state.loading, 
+                    formErrors  :   state   =>  state.formErrors 
+                }
+            )
+        },
          methods:
         {
+            ...filters, 
+            ...mapActions(
+                {
+                    forgotPassword   : "auth/forgotPassword", 
+                    showAlertMessage : "alertMessage/showAlertMessage"
+                }, 
+            ), 
             submit()
             {
                 if(this.$refs.form.validate()) 
                 {
-                    alert('Validated'); 
+                   this.forgotPassword(this.credentials); 
                 } 
                 else 
                 {
-                    alert('Not Validated'); 
+                    this.showAlertMessage(
+                        {
+                            message : "Please fill up the form correctly", 
+                            type    : "error", 
+                        }
+                    )
                 }
             }
         } 

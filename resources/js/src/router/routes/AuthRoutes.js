@@ -27,7 +27,7 @@ export default[
                             }
     },  
     {
-        path        :       '/reset-password', 
+        path        :       '/reset-password/:token', 
         component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "reset-password" */ "../../views/auth/AuthResetPassword"),  
         name        :       'auth.reset-password', 
         meta        :       {
