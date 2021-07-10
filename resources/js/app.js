@@ -27,10 +27,12 @@ import store   from './src/store/index.js';
 //* Mixins 
 import AuthMixin      from './src/mixins/AuthMixin';
 import RouteTypeMixin from './src/mixins/RouteTypeMixin';
-import PageTitleMixin     from './src/mixins/PageTitleMixin';
+import PageTitleMixin from './src/mixins/PageTitleMixin';
+import AppAlertMessageMixin from './src/mixins/AppAlertMessageMixin'; 
 
 //? Mixin must be separated
 Vue.mixin(AuthMixin); 
+Vue.mixin(AppAlertMessageMixin); 
 Vue.mixin(RouteTypeMixin);
 Vue.mixin(PageTitleMixin);
 
