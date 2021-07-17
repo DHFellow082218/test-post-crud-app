@@ -38,7 +38,7 @@
                         </v-col>
                         <v-col cols="12">
                             <v-text-field
-                                :type="showPassword ? 'text' : 'password'"
+                                :type="showPassword ? 'password' : 'text'"
                                 v-model="credentials.password"
                                 label="Password"
                                 prepend-inner-icon="mdi-lock-outline"

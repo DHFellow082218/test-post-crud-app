@@ -5,7 +5,7 @@ export default
     methods : 
     {
         ...mapActions(
-            alertMessage, 
+            'alertMessage', 
             [
                 'showAlertMessage', 
                 'destroyAlertMessage'
