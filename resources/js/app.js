@@ -62,6 +62,9 @@ Vuex.Store.prototype.$auth = auth
 Vuex.Store.prototype.$path = path
  */
 
+store.dispatch('auth/attempt'); 
+
+
 const app = new Vue(
     {
         el          : '#app',

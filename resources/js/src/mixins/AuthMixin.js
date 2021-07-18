@@ -6,7 +6,7 @@ export default
     {
         isAuthenticated()
         {
-            if(store.getters['auth/getUser'] && store.getters['auth/getToken'])
+            if(store.getters['auth/getUser'])
             {
                 return true;
             }

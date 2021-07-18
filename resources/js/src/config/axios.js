@@ -1,7 +1,7 @@
 import axios from 'axios';
 import store from '../store/index'; 
 
-
+//* ENV Variables
 axios.defaults.baseURL = process.env.MIX_API_LOCAL_URL;
 
 //* Instance 
@@ -21,18 +21,20 @@ axiosInstance.interceptors.request.use(config =>
 )
 */
 
+//* Defaults
+axios.defaults.withCredentials = true; 
 
 //* Interceptors
 let isRefreshing = false;
 let failedQueue = [];
 
-const processQueue = (error, token = null) => 
+const processQueue = (error) => 
 {
     failedQueue.forEach(prom => {
         if (error) {
             prom.reject(error);
         } else {
-            prom.resolve(token);
+            prom.resolve();
         }
     });
 
@@ -56,9 +58,8 @@ axios.interceptors.response.use(response =>
                         failedQueue.push({ resolve, reject });
                     }
                 )
-                .then(token => 
+                .then(response => 
                     {
-                        originalRequest.headers['Authorization'] = 'Bearer ' + store.getters['auth/getToken'];
                         return axios(originalRequest);
                     }
                 )
@@ -69,47 +70,34 @@ axios.interceptors.response.use(response =>
                 );
             }
 
-            originalRequest._retry = true;
             isRefreshing = true;
+            originalRequest._retry = true;
 
             return new Promise(function(resolve, reject) 
-                {
-                    const config = {
-                        headers: 
                         {
-                            'Authorization': 'Bearer ' + store.getters['auth/getToken']
+                            axios.post('auth/refresh')
+                                .then(({status}) => 
+                                    {
+                                        processQueue(null);
+                                        resolve(axios(originalRequest));
+                                    }
+                                )
+                                .catch(err => 
+                                    {
+                                        processQueue(err)
+                                        reject(err);
+                                    }
+                                )
+                                .finally(() => 
+                                    {
+                                        isRefreshing = false;
+                                    }
+                                );
                         }
-                    }
-    
-                    axios.post('auth/refresh', {}, config)
-                        .then(({ data }) => 
-                            {
-                                console.log(data); 
-
-                                store.commit('auth/setToken', data.token)
-                                originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
-                                processQueue(null, data.token);
-                                resolve(axios(originalRequest));
-                            }
-                        )
-                        .catch(err => 
-                            {
-                                processQueue(err, null);
-                                reject(err);
-                            }
-                        )
-                        .finally(() => 
-                            {
-                                isRefreshing = false;
-                            }
-                        );
-                }
             );
         }
 
-        return Promise.reject(err);
+        return Promise.reject(false);
     }
 );
 
-//* Defaults
-axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token');

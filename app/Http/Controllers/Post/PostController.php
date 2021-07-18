@@ -21,7 +21,7 @@ class PostController extends ApiController
 {
     public function __construct()
     {
-        //$this->middleware('jwt.verify')->except(['show']);
+        $this->middleware('jwt.verify')->except(['show']);
     }
 
     /**

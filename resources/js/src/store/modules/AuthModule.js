@@ -1,3 +1,4 @@
+import axios from 'axios';
 import router from '../../router/index';
 import store from '../index'; 
 
@@ -7,78 +8,54 @@ export default(
         state: 
         {
             user         : null,
-            token        : null, 
             loading      : false, 
             formErrors   : {}, 
         },
         getters:
         {
-            getToken     : state => state.token, 
             getUser      : state => state.user, 
         },
         actions: 
         {
             async login({dispatch, commit}, credentials)
             {           
-                store.dispatch("alertMessage/destroyAlertMessage");
                 commit('setLoading', true);
                 
                 const response  =   await axios.post("auth/login", 
                                         {
                                             "email"         : credentials.email, 
                                             "password"      : credentials.password, 
-                                        }
+                                        },
                                     )
                                     .catch(error => 
                                         {
                                             if(error.response)
                                             {
-                                                store.dispatch("alertMessage/showAlertMessage", 
-                                                    {
-                                                        message : error.response.data.message,  
-                                                        type    : "error", 
-                                                    }
-                                                ); 
+                                              
                                             }
                                         }
                                     );           
                 
-                                    
                 if(!response)
                 {
                     commit('setLoading', false);
                     return;
                 }  
 
-                dispatch('attempt', response.data.data.token);      
+                commit('setUser', response.data.user);      
 
                 commit('setLoading', false); 
+
+                return response; 
             },
 
-            async attempt({state, commit}, token)
+            async attempt({commit})
             {              
-                if(token) commit('setToken', token); 
-                 
-                if(!state.token) return; 
-                        
-                const response      =   await axios.get("auth/profile")
-                                            .catch(error => 
-                                                {
-                                                    if(error.response)
-                                                    {
-                                                        store.dispatch("alertMessage/showAlertMessage", 
-                                                            {
-                                                                message : error.response.data.message,  
-                                                                type    : "error", 
-                                                            }
-                                                        ); 
-                                                    }
-                                                }
-                                            );  
+                // TODO  Problem : Http only cookie not passed in header, see config/axios.js 
+                const response      =   await axios.get("auth/profile");
             
                 if(!response)
                 {
-                    commit('setToken', null); 
                     commit('setUser', null); 
                     
                     return; 
@@ -88,14 +65,7 @@ export default(
 
                 if(response.status === 200)
                 {
-                    store.dispatch("alertMessage/showAlertMessage", 
-                        {
-                            message : "Login Successful",  
-                            type    : "success", 
-                        }
-                    ); 
-                    
-                    router.push({name : 'home'}); 
+                    //router.push({name : 'home'}); 
                 }
             },
 
@@ -153,10 +123,10 @@ export default(
 
             logout({commit})
             {
+                //? Problem: cookie does NOT get deleted
                 return axios.post('auth/logout')
                             .then((res) => 
                                 {
-                                    commit('setToken', null); 
                                     commit('setUser', null); 
 
                                     return res; 
@@ -266,16 +236,12 @@ export default(
                     );      
 
                     router.push({name : 'auth.login'}); 
-                } 
+                }
+            }, 
 
-            }
         }, 
         mutations:
         {
-            setToken(state, payload) 
-            {
-                state.token         = payload;
-            }, 
             setUser(state, payload)
             {
                 state.user          = payload;

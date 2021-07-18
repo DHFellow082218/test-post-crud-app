@@ -28,11 +28,13 @@ class LoginController extends ApiController
             return $this->respondInvalidCredentials();
         }        
 
-        return $this->respond(
-            AuthService::respondWithToken($token),
-            "Login Successfull"
-        );
+        $cookie = AuthService::setCookie(AuthService::respondWithToken($token));
+
+        return response()->json([
+            'token' => $token,
+            'user'  => auth()->user() 
+            //'user' => auth()->user(),
+        ])->withCookie($cookie);
     }
     
-
 }

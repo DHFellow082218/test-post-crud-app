@@ -23,7 +23,8 @@ class RefreshController extends ApiController
         {
             if($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException)
             {
-                return AuthService::respondWithToken(auth()->refresh());
+                $cookie = AuthService::setCookie(AuthService::respondWithToken(auth()->refresh()));
+                return response()->json(['message' => "Token Refreshed"])->withCookie($cookie);
             }
 
             if($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException)

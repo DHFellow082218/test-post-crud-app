@@ -1,3 +1,4 @@
+/*
 import store from '../store/index'; 
 import axios from 'axios';
 
@@ -20,5 +21,5 @@ store.subscribe(mutation =>
         }
     }
 ); 
-
+*/
 //* Reference: https://www.youtube.com/watch?v=P5YWkLsA9JQ&list=PLfdtiltiRHWF1jqLcNO_2jWJXj9RuSDvY&index=8

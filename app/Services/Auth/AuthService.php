@@ -32,4 +32,26 @@ class AuthService extends BaseService
             ]
         );
     }
+
+    /**
+     * Set cookie details and return cookie
+     *
+     * @param string $token JWT
+     *
+     * @return \Illuminate\Cookie\CookieJar|\Symfony\Component\HttpFoundation\Cookie
+     */
+    public static function setCookie($jwt)
+    {
+        return cookie(
+            '_jwt',
+            $jwt['token'], 
+            100,
+            null,
+            null,
+            env('APP_DEBUG') ? false : true,
+            true,
+            false,
+            'Strict'
+        );
+    }
 }

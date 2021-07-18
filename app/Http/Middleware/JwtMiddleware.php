@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Closure;
 use Exception;
 use JWTAuth;
+use Illuminate\Support\Facades\Cookie;
+
 
 class JwtMiddleware
 {

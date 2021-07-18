@@ -95,14 +95,34 @@ export default
         ...mapActions(
             {
                 login            : "auth/login", 
-                showAlertMessage : "alertMessage/showAlertMessage"
             }
         ),
         submit()
         {
             if(this.$refs.form.validate())
             {
-                this.login(this.credentials); 
+                this.login(this.credentials)
+                    .then(res => 
+                        {
+                            this.$router.push({name : 'home'})
+                            this.showAlertMessage(
+                                {
+                                    message : "Login Success", 
+                                    type    : "success", 
+                                }
+                            )
+                        } 
+                    )
+                    .catch(err => 
+                        {
+                            this.showAlertMessage(
+                                {
+                                    message : "Invalid Credentials", 
+                                    type    : "error", 
+                                }
+                            )
+                        }
+                    )
             }
             else
             {

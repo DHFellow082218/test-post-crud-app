@@ -15,8 +15,10 @@ export default(
         },
         actions: 
         {
-            showAlertMessage({commit}, {message, type})
+            showAlertMessage({commit, dispatch}, {message, type})
             {
+                dispatch('destroyAlertMessage');
+
                 commit('setMessage', message); 
                 commit('setType', type); 
                 commit('setVisible', true); 

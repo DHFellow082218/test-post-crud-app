@@ -37,6 +37,7 @@ export default new Vuex.Store(
         },
         plugins: 
         [
+            /*
             createPersistedState(
                 {
                     paths: 
@@ -52,6 +53,7 @@ export default new Vuex.Store(
                     }
                 }
             )
+            */
         ],
     }
 )
