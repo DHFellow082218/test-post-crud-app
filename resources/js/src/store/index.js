@@ -37,12 +37,10 @@ export default new Vuex.Store(
         },
         plugins: 
         [
-            /*
             createPersistedState(
                 {
                     paths: 
                     [
-                        'auth.token', 
                         'auth.user'
                     ],
                     storage: 
@@ -53,7 +51,6 @@ export default new Vuex.Store(
                     }
                 }
             )
-            */
         ],
     }
 )

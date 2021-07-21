@@ -1,4 +1,5 @@
 import axios from 'axios';
+import router from '../router/index'; 
 import store from '../store/index'; 
 
 //* ENV Variables
@@ -48,6 +49,11 @@ axios.interceptors.response.use(response =>
     err => 
     {
         const originalRequest = err.config;
+
+        if(err.response.status === 404)
+        {
+            //router.push({name : 'auth.login'}); 
+        }
 
         if (err.response.status === 401 && !originalRequest._retry) 
         {

@@ -19,7 +19,7 @@ export default(
         {
             async login({dispatch, commit}, credentials)
             {           
-                commit('setLoading', true);
+                commit('SET_LOADING', true);
                 
                 const response  =   await axios.post("auth/login", 
                                         {
@@ -38,13 +38,13 @@ export default(
                 
                 if(!response)
                 {
-                    commit('setLoading', false);
+                    commit('SET_LOADING', false);
                     return;
                 }  
 
-                commit('setUser', response.data.user);      
+                commit('SET_USER', response.data.user);      
 
-                commit('setLoading', false); 
+                commit('SET_LOADING', false); 
 
                 return response; 
             },
@@ -56,12 +56,12 @@ export default(
             
                 if(!response)
                 {
-                    commit('setUser', null); 
+                    commit('SET_USER', null); 
                     
                     return; 
                 }
                 
-                commit('setUser', response.data.data.item); 
+                commit('SET_USER', response.data.data.item); 
 
                 if(response.status === 200)
                 {
@@ -72,8 +72,8 @@ export default(
             async register({commit}, credentials)
             {
                 store.dispatch("alertMessage/destroyAlertMessage");
-                commit('setFormErrors', {}); 
-                commit('setLoading', true);
+                commit('SET_FORM_ERRORS', {}); 
+                commit('SET_LOADING', true);
                 
                 const response  =   await axios.post("auth/register", 
                                         {
@@ -96,13 +96,13 @@ export default(
 
                                                 if(error.response.status === 422)
                                                 {
-                                                    commit('setFormErrors', error.response.data.errors); 
+                                                    commit('SET_FORM_ERRORS', error.response.data.errors); 
                                                 }
                                             }
                                         }
                                     );           
                 
-                commit('setLoading', false);
+                commit('SET_LOADING', false);
 
                 if(!response) return; 
                 
@@ -127,7 +127,7 @@ export default(
                 return axios.post('auth/logout')
                             .then((res) => 
                                 {
-                                    commit('setUser', null); 
+                                    commit('SET_USER', null); 
 
                                     return res; 
                                 }
@@ -142,8 +142,8 @@ export default(
             async forgotPassword({commit}, credentials)
             {
                 store.dispatch("alertMessage/destroyAlertMessage");
-                commit('setFormErrors', {}); 
-                commit('setLoading', true);
+                commit('SET_FORM_ERRORS', {}); 
+                commit('SET_LOADING', true);
                 
                 const response      =   await axios.post("auth/forgot-password", 
                                             {
@@ -163,13 +163,13 @@ export default(
 
                                                     if(error.response.status === 422)
                                                     {
-                                                        commit('setFormErrors', error.response.data.errors); 
+                                                        commit('SET_FORM_ERRORS', error.response.data.errors); 
                                                     }
                                                 }
                                             }
                                         );   
                                         
-                commit('setLoading', false);
+                commit('SET_LOADING', false);
 
                 if(!response) return; 
 
@@ -192,8 +192,8 @@ export default(
 
                 alert(token);
                 store.dispatch("alertMessage/destroyAlertMessage");
-                commit('setFormErrors', {}); 
-                commit('setLoading', true);
+                commit('SET_FORM_ERRORS', {}); 
+                commit('SET_LOADING', true);
                 
                 const response      =   await axios.post("auth/reset-password", 
                                             {
@@ -216,13 +216,13 @@ export default(
 
                                                     if(error.response.status === 422)
                                                     {
-                                                        commit('setFormErrors', error.response.data.errors); 
+                                                        commit('SET_FORM_ERRORS', error.response.data.errors); 
                                                     }
                                                 }
                                             }
                                         );       
 
-                commit('setLoading', false);
+                commit('SET_LOADING', false);
 
                 if(!response) return; 
 
@@ -242,15 +242,15 @@ export default(
         }, 
         mutations:
         {
-            setUser(state, payload)
+            SET_USER(state, payload)
             {
                 state.user          = payload;
             },
-            setFormErrors(state, payload)
+            SET_FORM_ERRORS(state, payload)
             {
                 state.formErrors    = payload; 
             }, 
-            setLoading(state, payload)
+            SET_LOADING(state, payload)
             {
                 state.loading       = payload; 
             }

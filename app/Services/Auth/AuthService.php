@@ -36,7 +36,7 @@ class AuthService extends BaseService
     /**
      * Set cookie details and return cookie
      *
-     * @param string $token JWT
+     * @param string $jwt JWT
      *
      * @return \Illuminate\Cookie\CookieJar|\Symfony\Component\HttpFoundation\Cookie
      */
@@ -45,7 +45,7 @@ class AuthService extends BaseService
         return cookie(
             '_jwt',
             $jwt['token'], 
-            100,
+            $jwt['expires_in'] + 30,
             null,
             null,
             env('APP_DEBUG') ? false : true,
