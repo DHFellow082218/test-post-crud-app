@@ -3,7 +3,7 @@ import router from '../router/index';
 import store from '../store/index'; 
 
 //* ENV Variables
-axios.defaults.baseURL = process.env.MIX_API_LOCAL_URL;
+axios.defaults.baseURL = process.env.MIX_API_URL;
 
 //* Instance 
 /*
