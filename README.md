@@ -163,7 +163,7 @@ In order to monitor our progress, signal other developers, and emphasize our com
 |:seedling:                 |`:seedling:`                   |Add or update database seed files      |
 |:truck:                    |`:truck:`                      |Rename Files, Routes etc.              |
 |:twisted_rightwards_arrows:|`:twisted_rightwards_arrows:`  |Merge Branches                         |
-|:wench:                    |`:wench:`                      |Update configuration files             |
+|:wrench:                   |`:wrench:`                     |Update configuration files             |
 |:zap:                      |`:zap:`                        |Write code to improve performance      |
 
 Example Usage:
