@@ -6,7 +6,6 @@
             :mini-variant.sync="mini"
             src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
             permanent
-            class="teal darken-1"
         >
             <v-list-item class="px-2 py-4">
                 <v-list-item-avatar>

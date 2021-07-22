@@ -85,22 +85,18 @@ $ npm i
 $ php artisan key:generate
 $ php artisan jwt:secret 
 
-# Run dump-autoload 
+# Clear all composer's cache directories, Update Autoloader and Remove the cached bootstrap files
+$ composer clear
 $ composer dump-autoload
+$ php artisan optimize:clear
+
+# Create the symbolic link for storage for file uploads
+$ php artisan storage:link
 
 # Run Migrations and Seeders
 $ php artisan migrate:fresh 
 $ php artisan db:seed
 
-# Clear the cache, config and routes
-$ php artisan cache:clear 
-$ php artisan config:clear 
-$ php artisan route:clear 
-```
-
-* Then Start the Server  
-
-```bash
 # Start the server
 $ php artisan serve 
 $ npm run watch
@@ -114,7 +110,7 @@ The main repository will be divided into branches that may increase over time to
 
 |Branch        		                       |Description                                                                                                                                |
 |:----------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
-|`master`                                  |The default branch; will always contain the latest changes. Contributors are encourage to often pull code from this branch in their forks|
+|`master`                                  |The default branch; will always contain the latest changes.                                                                              |
 |`_develop`                                |This branch cointers code to be tested in a live server                                                                                  |  
 |`_production`                             |This branch contains code that will be used for deployment                                                                               |
 
@@ -124,7 +120,7 @@ Contributors will be using [Standard Fork & Pull Request Workflow](https://gist.
 
 ```bash
 # Add upstream to remote 
-git remote add upstream https://github.com/ictdu/spcf-general-accounting.git
+git remote add upstream https://github.com/user/repo.git
 
 # Pull Changes from upstream/master branch 
 git pull upstream master
@@ -142,19 +138,33 @@ In order to monitor our progress, signal other developers, and emphasize our com
 | Illustration              | Code                          | Description                           |
 |:-------------------------:|:-----------------------------:|:-------------------------------------:|
 |:100:                      |`:100:`                        |Functions, routes, migrations etc.     |
+|:adhesive_bandage:         |`:adhesive_bandage:`           |Simple Hotfix for Production           |
+|:ambulance:                |`:ambulance:`                  |Critical Hotfix for Production         |
+|:arrow_up:                 |`:arrow_up:`                   |Upgrade package dependencies           |
+|:arrow_down:               |`:arrow_down:`                 |Downgrade package dependencies         |
 |:art:                      |`:art:`                        |Improve Code Struture or Format        |
 |:bug:                      |`:bug:`                        |Bug Fixing                             |
+|:bento:                    |`:bento:`                      |Update Project Assets                  |
+|:bookmark:                 |`:bookmark:`                   |Project Releases or Version Tags       |
 |:bulb:                     |`:bulb:`                       |Add Comments in your code              |
+|:card_file_box:            |`:card_file_box:`              |Perform Database Structural changes    |
 |:coffee:                   |`:coffee:`                     |Initial or Non-important changes       |
 |:construction:             |`:construction:`               |Work in Progress                       |
 |:fire:                     |`:fire:`                       |Remove Code and Files                  |
+|:hammer:                   |`:hammer:`                     |Add or update development scripts      |
+|:iphone:                   |`:iphone:`                     |Work on Responsive Design              |
 |:notebook:                 |`:notebook:`                   |Documentation                          |
-|:pencil2:                  |`:pencil2:`                    |Fix Typos                              |
+|:package:                  |`:package:`                    |Add or setup package                   |
+|:passport_control:         |`:passport_control:`           |Authorization, roles and permissions   |
+|:pen:                      |`:pen:`                        |Fix Typos                              |
 |:recycle:                  |`:recycle:`                    |Refactor Code                          |
+|:rewind:                   |`:rewind:`                     |Revert Changes                         |
+|:sparkles:                 |`:sparkles:`                   |Introduce a new Feature                |
+|:seedling:                 |`:seedling:`                   |Add or update database seed files      |
 |:truck:                    |`:truck:`                      |Rename Files, Routes etc.              |
 |:twisted_rightwards_arrows:|`:twisted_rightwards_arrows:`  |Merge Branches                         |
-|:rewind:                   |`:rewind:`                     |Revert Changes                         |
-|:iphone:                   |`:iphone:`                     |Work on Responsive Design              |
+|:wench:                    |`:wench:`                      |Update configuration files             |
+|:zap:                      |`:zap:`                        |Write code to improve performance      |
 
 Example Usage:
 
@@ -175,3 +185,5 @@ The examples above will display:
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+The VueJs is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

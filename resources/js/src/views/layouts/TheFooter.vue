@@ -1,6 +1,6 @@
 <template>
-    <div class="text-right blue py-5 px-5 white--text">
-        Copyright DHFellow082218
+    <div class="text-right blue pa-5 white--text font-weight-bold">
+        &#169; DHFellow082218
     </div>
 </template>
 

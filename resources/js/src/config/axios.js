@@ -52,7 +52,8 @@ axios.interceptors.response.use(response =>
 
         if(err.response.status === 404)
         {
-            //router.push({name : 'auth.login'}); 
+            store.commit('auth/SET_USER', null); 
+            //router.push({name : 'auth.login'});
         }
 
         if (err.response.status === 401 && !originalRequest._retry) 
