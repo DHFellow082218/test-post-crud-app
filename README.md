@@ -20,6 +20,13 @@ This is a sample readme file
 
 ## General Info
 
+<style>
+  table
+  {
+    width : 100%;
+  }
+</style>
+
 To be Added
 
 ## Features
