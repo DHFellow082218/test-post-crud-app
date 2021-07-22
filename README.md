@@ -9,7 +9,8 @@ This is a sample readme file
 * [Scope](#scope)
 * [Technologies](#technologies)
   * [Frameworks](#frameworks)
-  * [Packages](#packages)
+  * [Composer Packages](#composer-packages)
+  * [NPM Packages](#npm-packages)
 * [Contributing](#contributing)
   * [Forking the Project](#forking-the-project)
   * [Code Consistency](#code-consistency)
@@ -35,30 +36,39 @@ Project is created with:
 
 ### Frameworks
 
-|Name                                                                              |Version          |
-|:--------------------------------------------------------------------------------:|:---------------:|
-|[Laravel](https://laravel.com/docs/8.x)                                           |`^8.0.0`         |
-|[VueJS](https://vuejs.org/v2/guide/)                                              |`^2.0.0`         |
+|Name                                                                                                           |Version          |Description                                  |
+|:--------------------------------------------------------------------------------:                             |:---------------:|:-------------------------------------------:|
+|[Laravel](https://laravel.com/docs/8.x)                                                                        |`^8.0.0`         |PHP Back-End Framework                       |
+|[VueJS](https://vuejs.org/v2/guide/)                                                                           |`^2.5.0`         |Javascript Front-End Framework               |
+|[Vuetify](https://vuetifyjs.com/en/)                                                                           |`^2.5.0`         |Material Design Framework for VueJS          |
 
-### Packages
+### Composer Packages
 
-|Name 		                                                                                                      |Version          |Function                                     |
-|:---------------------------------------------------------------------------------------------:                |:---------------:|:-------------------------------------------:|
-|[barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf)                                          |`^0.9.0`         |HTML to PDF Renderer                         |
-|[lorisleiva/laravel-actions](https://laravelactions.com/2.x/installation.html)                                 |`^1.0.0`         |Organize Code Structure                      |
-|[laravel/telescope](https://laravel.com/docs/8.x/telescope)                                                    |`^4.0.0`         |Performance Monitoring and Testing           |
-|[maatwebsite/excel](https://docs.laravel-excel.com/3.1/getting-started/installation.html)                      |`^3.1.0`         |Excel Renderer                               |
-|[spatie/laravel-permission](https://spatie.be/docs/laravel-permission/v3/installation-laravel)                 |`^3.0.0`         |Associate Users with Roles and Permissions   |
-|[spatie/laravel-activitylog](https://spatie.be/docs/laravel-activitylog/v4/introduction)                       |`^4.0.0`         |Activity Logging                             |
-|[MarcinOrlowski/laravel-api-response-builder](https://github.com/MarcinOrlowski/laravel-api-response-builder)  |`^9.0.0`         |API Response Builder                         |
-|[tymon/jwt-auth](https://jwt-auth.readthedocs.io/en/develop/laravel-installation/)                             |`^1.0.0`         |API Token Authentication                     |
-|[Vue Router](https://router.vuejs.org/guide/)                                                                  |`^3.0.0`         |Official Router For VueJS                    |
-|[Vuex](https://vuex.vuejs.org/)                                                                                |`^2.0.0`         |State Management For VueJS                   |
+|Name                                                                                                           |Version          |Description                                    |
+|:---------------------------------------------------------------------------------------------:                |:---------------:|:-------------------------------------------:  |
+|[barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf)                                          |`^0.9.0`         |HTML to PDF Renderer                           |
+|[lorisleiva/laravel-actions](https://laravelactions.com/2.x/installation.html)                                 |`^1.0.0`         |Organize Code Structure                        |
+|[laravel/telescope](https://laravel.com/docs/8.x/telescope)                                                    |`^4.0.0`         |API Performance Monitoring and Testing         |
+|[maatwebsite/excel](https://docs.laravel-excel.com/3.1/getting-started/installation.html)                      |`^3.1.0`         |Excel Renderer                                 |
+|[spatie/laravel-permission](https://spatie.be/docs/laravel-permission/v3/installation-laravel)                 |`^3.0.0`         |Associate Users with Roles and Permissions     |
+|[spatie/laravel-activitylog](https://spatie.be/docs/laravel-activitylog/v4/introduction)                       |`^4.0.0`         |Activity Logging                               |
+|[MarcinOrlowski/laravel-api-response-builder](https://github.com/MarcinOrlowski/laravel-api-response-builder)  |`^9.0.0`         |API Response Builder                           |
+|[tymon/jwt-auth](https://jwt-auth.readthedocs.io/en/develop/laravel-installation/)                             |`^1.0.0`         |API Token Authentication                       |
+
+### NPM Packages
+
+|Name                                                                                                           |Version          |Description                                    |
+|:--------------------------------------------------------------------------------:                             |:---------------:|:-------------------------------------------:  |
+|[Vue Router](https://router.vuejs.org/guide/)                                                                  |`^3.0.0`         |Official Router For VueJS                      |
+|[Vuex](https://vuex.vuejs.org/)                                                                                |`^2.0.0`         |State Management For VueJS                     |
+|[Casl Vue](https://casl.js.org/v4/en/package/casl-vue)                                                         |`^2.1.0`         |Vue Plugin for User Authorization              |
+|[vuex-persistedstate](https://www.npmjs.com/package/vuex-persistedstate/v/3.2.0)                               |`^3.0.0`         |Vuex Plugin for Persisted State                |
+|[js-cookie](https://www.npmjs.com/package/js-cookie)                                                           |`^2.2.0`         |lightweight JavaScript API for handling cookies|
 
 
 ## Project Setup
 
-* Set up your `.env file` by copying the contents of the `.env.example` file then configure it according to your **MySQL Database Credentials** to establish a connection.
+* Set up your `.env file` by copying the contents of the `.env.example` file then configure it according to your **MySQL Database Credentials** to establish a connection as well as your **Mailtrap Inbox SMTP Credentials** for Email Testing.
 
 ```bash
 # Create and copy the contents of the .env.example file to .env file 
@@ -72,6 +82,15 @@ DB_PORT=<database port>
 DB_DATABASE=<database name>
 DB_USERNAME=<database username>
 DB_PASSWORD=<database password>
+
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=<mailtrap smtp username>
+MAIL_PASSWORD=<mailtrap smtp password>
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=null
+MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 * After setting up your `.env` file, run the following code to setup the project.
@@ -108,11 +127,11 @@ $ npm run watch
 
 The main repository will be divided into branches that may increase over time to modularize development. The purpose of the **first three branches** will remain the same throughout our project development.
 
-|Branch        		                       |Description                                                                                                                                |
+|Branch                                    |Description                                                                                                                              |
 |:----------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
 |`master`                                  |The default branch; will always contain the latest changes.                                                                              |
-|`_develop`                                |This branch cointers code to be tested in a live server                                                                                  |  
-|`_production`                             |This branch contains code that will be used for deployment                                                                               |
+|`_develop`                                |This branch contains code that is configured for a production environment to be tested in a live server                                  |  
+|`_production`                             |This branch contains code that was tested in `_develop` and is actively being used in the live server by our clients                     |
 
 ### Forking the Project  
 
