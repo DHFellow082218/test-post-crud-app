@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\ApiController;
-use App\Http\Api\ApiCodes;
 use App\Http\Requests\Auth\ChangePasswordRequest; 
-use App\Models\User; 
+use Illuminate\Support\Facades\Hash; 
 
 class ChangePasswordController extends ApiController
 {
@@ -16,6 +15,11 @@ class ChangePasswordController extends ApiController
 
     public function __invoke(ChangePasswordRequest $request)
     {
+        if(!Hash::check($request->current_password, auth()->user()->password))
+        {
+            return $this->respondWithErrorMessage("Current Password does not match"); 
+        }
+
         auth()->user()->update(
             [
                 "password" => bcrypt($request->password), 

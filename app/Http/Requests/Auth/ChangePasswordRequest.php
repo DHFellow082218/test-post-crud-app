@@ -24,7 +24,8 @@ class ChangePasswordRequest extends ResponseRequest
     public function rules()
     {
         return [
-            "password"  => ["required", "confirmed"]
+            "current_password"  =>  ["required"], 
+            "password"          =>  ["required", "min:8", "confirmed"]
         ];
     }
 }

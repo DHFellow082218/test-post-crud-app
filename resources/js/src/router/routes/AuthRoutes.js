@@ -1,5 +1,6 @@
 //* Middleware
 import GuestMiddleware from "../../middlewares/GuestMiddleware";
+import AuthMiddleware from "../../middlewares/AuthMiddleware"; 
 
 export default[
     {
@@ -25,7 +26,15 @@ export default[
         meta        :       {
                                 middleware : [GuestMiddleware]
                             }
-    },  
+    },
+    {
+        path        :       '/change-password', 
+        component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "forgot-password" */ "../../views/auth/AuthChangePassword"),  
+        name        :       'auth.change-password', 
+        meta        :       {
+                                middleware : [AuthMiddleware]
+                            }
+    }, 
     {
         path        :       '/reset-password/:token', 
         component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "reset-password" */ "../../views/auth/AuthResetPassword"),  

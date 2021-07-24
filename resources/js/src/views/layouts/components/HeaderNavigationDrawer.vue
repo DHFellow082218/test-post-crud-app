@@ -22,20 +22,25 @@
 
             <v-divider class="mt-0"/>
             
-            <v-list>
-                <v-list-item
-                v-for="([icon, text], i) in items"
-                :key="i"
-                link
+            <v-list nav dense>
+                <div
+                    v-for="(link, i) in links"
+                    :key="i"
                 >
-                <v-list-item-icon>
-                    <v-icon>{{ icon }}</v-icon>
-                </v-list-item-icon>
+                    <v-list-item
+                        :to="{name : link.to}"
+                        exact
+                        link
+                    >
+                        <v-list-item-icon>
+                            <v-icon>{{link.icon}}</v-icon>
+                        </v-list-item-icon>
 
-                <v-list-item-content>
-                    <v-list-item-title>{{ text }}</v-list-item-title>
-                </v-list-item-content>
-                </v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title>{{link.text}}</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+                </div>
             </v-list>
         
             <template v-slot:append v-if="!mini">
@@ -66,11 +71,18 @@
             {
                 drawer  : true, 
                 mini    : true,
-                items   : 
+                links   : 
                 [
-                    ['mdi-email', 'Inbox'],
-                    ['mdi-account-supervisor-circle', 'Supervisors'],
-                    ['mdi-clock-start', 'Clock-in'],
+                    {
+                        icon : "mdi-home", 
+                        text : "Home", 
+                        to   : "home"
+                    },  
+                    {
+                        icon : "mdi-key", 
+                        text : "Change Password", 
+                        to   : "auth.change-password"
+                    },
                 ],
             }
         ),

@@ -116,7 +116,26 @@ export default(
 
             async changePassword({commit}, credentials)
             {
+                commit('SET_PROCESSING', true); 
 
+                const response      =   await axios.post("auth/change-password", 
+                                            {
+                                                "current_password"      :   credentials.current_password, 
+                                                "password"              :   credentials.password, 
+                                                'password_confirmation' :   credentials.password_confirmation
+                                            }
+                                        )
+                                        .catch(error => 
+                                            {
+                                                return error.response; 
+                                            }
+                                        );   
+                                        
+                commit('SET_PROCESSING', false); 
+
+                if(!response) return;
+
+                return response;  
             },
 
             async forgotPassword({commit}, credentials)
