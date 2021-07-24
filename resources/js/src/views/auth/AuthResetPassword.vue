@@ -57,7 +57,7 @@
                             <v-btn  
                                 color="success" 
                                 @click='submit()'
-                                :loading="loading"
+                                :loading="processing"
                                 width="500"
                             >
                                 Reset Password
@@ -78,36 +78,72 @@
         title   :   "Reset Password",    
         data    :   ()  => (
             {
-                credentials     :   [],
+                credentials     :   {},
+                formErrors      :   {email : null},
                 rules
             }
         ),
         computed : 
         {
-            ...mapState('auth',
+            ...mapState(
+                'auth',
                 {
-                    loading     :   state   =>  state.loading, 
-                    formErrors  :   state   =>  state.formErrors 
+                    processing : state => state.processing    
                 }
             )
         },
          methods:
         {
             ...filters, 
+
             ...mapActions(
-                {
-                    resetPassword   : "auth/resetPassword", 
-                    showAlertMessage : "alertMessage/showAlertMessage"
-                }, 
-            ), 
+                'auth', 
+                [
+                    "resetPassword"
+                ]
+            ),
+
             submit()
             {
                 if(this.$refs.form.validate()) 
                 {
                     this.credentials.token = this.$route.params.token;
 
-                    console.log(this.credentials);
-                    this.resetPassword(this.credentials); 
+                    this.resetPassword(this.credentials)
+                        .then(res => 
+                            {
+                                if(res.status === 200)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : "Password was successfully reset", 
+                                            type    : "success", 
+                                        }
+                                    )
+
+                                    this.$router.replace({name : 'auth.login'})
+                                }
+                                else 
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : "Password was NOT reset", 
+                                            type    : "error", 
+                                        }
+                                    )
+                                }
+                            }
+                        )
+                        .catch(err => 
+                            {
+                                this.showAlertMessage(
+                                    {
+                                        message : "Something went wrong", 
+                                        type    : "error", 
+                                    }
+                                )
+                            }
+                        ); 
                 } 
                 else 
                 {
@@ -120,10 +156,6 @@
                 }
             }
         },  
-        mounted() 
-        {
-            console.log(this.$route.params.token);
-        }
     }
 </script>
 

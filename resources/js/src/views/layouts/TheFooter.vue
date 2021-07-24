@@ -1,5 +1,5 @@
 <template>
-    <div class="text-right blue pa-5 white--text font-weight-bold">
+    <div class="text-right pa-5 font-weight-bold">
         &#169; DHFellow082218
     </div>
 </template>

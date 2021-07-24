@@ -20,12 +20,19 @@ export default new Vuetify(
             {
                 light: 
                 {
-                    primary: '#3fa1f5',
-                    secondary: '#696969',
-                    accent: '#8cfebf',
-                    error: '#fc6f90',
-                    black: '#111',
+                    primary     : '#3fa1f5',
+                    secondary   : '#696969',
+                    accent      : '#8cfebf',
+                    error       : '#ff3a50',
+                    black       : '#111',
                 },
+                dark:
+                {
+                    primary     : '#3fa1f5',
+                    secondary   : '#696969',
+                    accent      : '#8cfebf',
+                    error       : '#f23a50',
+                }, 
             },
         },
     }

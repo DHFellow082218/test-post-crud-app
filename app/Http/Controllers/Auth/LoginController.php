@@ -31,8 +31,9 @@ class LoginController extends ApiController
         $cookie = AuthService::setCookie(AuthService::respondWithToken($token));
 
         return response()->json([
-            'token' => $token,
-            'user'  => auth()->user() 
+            'message'   => 'Login Successful',
+            'token'     => $token,
+            'user'      => auth()->user() 
             //'user' => auth()->user(),
         ])->withCookie($cookie);
     }

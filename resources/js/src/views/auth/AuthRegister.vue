@@ -68,7 +68,7 @@
                     <v-col cols="12" class="d-flex justify-center">
                         <v-btn color="success" 
                             block 
-                            :loading="loading"
+                            :loading="processing"
                             @click="submit()"
                         >
                             Register
@@ -94,37 +94,80 @@
         title   :   'Register',
         data    :   ()  => (
             {
-                credentials     :   [], 
+                credentials     :   {}, 
+                formErrors      :   
+                {
+                    name        :   null,
+                    email       :   null
+                }, 
                 showPassword    :   String,
                 rules      
             }
         ),
         computed:
         {
-        
             ...mapState(
                 'auth', 
                 {
-                    formErrors  : state => state.formErrors,
-                    loading     : state => state.loading,  
+                    processing : state => state.processing 
                 }
             )
-            
         }, 
          methods:
         {
             ...filters,
+
             ...mapActions(
-                {
-                    register         : "auth/register", 
-                    showAlertMessage : "alertMessage/showAlertMessage"
-                }
+                'auth',
+                [
+                    "register"
+                ]
             ), 
+
             submit()
             {
+                this.setFormErrors();
+
                 if(this.$refs.form.validate())
                 {
-                    this.register(this.credentials); 
+                    this.register(this.credentials)
+                        .then(res => 
+                            {
+                                if(res.status === 200)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : res.data.message,  
+                                            type    : "success", 
+                                        }
+                                    );
+                                    
+                                    this.$router.push({name : 'auth.login'})
+                                }
+
+                                if(res.status === 422)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : res.data.message,  
+                                            type    : "error", 
+                                        }
+                                    );   
+
+                                    this.setFormErrors(res.data.errors); 
+                                }
+                            }
+                        )
+                        .catch(err => 
+                            {
+                                this.showAlertMessage(
+                                    {
+                                        message : "Could not register User", 
+                                        type    : "error", 
+                                    }
+                                )
+                             }
+                        ); 
                 }
                 else
                 {
@@ -135,21 +178,28 @@
                         }
                     )
                 }
-
             },
 
-            setErrors(errors)
+            setFormErrors(errors = null)
             {
-                if(errors.name)
+                if(errors)
                 {
-                    this.errors.name =  errors.name[0];       
+                    if(errors.name)
+                    {
+                        this.formErrors.name  =  errors.name[0];                 
+                    }
+                
+                    if(errors.email)
+                    {
+                        this.formErrors.email  =  errors.email[0];                 
+                    }
                 }
-
-                if(errors.email)
+                else 
                 {
-                    this.errors.email =  errors.email[0]; 
+                    this.formErrors.name  =  null;      
+                    this.formErrors.email  =  null;   
                 }
             }
-        }
+        }, 
     }
 </script>

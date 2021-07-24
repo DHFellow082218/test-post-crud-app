@@ -2,9 +2,7 @@
     <div>
         <v-navigation-drawer 
             app 
-            dark
             :mini-variant.sync="mini"
-            src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
             permanent
         >
             <v-list-item class="px-2 py-4">
@@ -42,9 +40,14 @@
         
             <template v-slot:append v-if="!mini">
                 <div class="pa-2">
-                <v-btn color="success" block @click="logout()">
-                    Logout
-                </v-btn>
+                    <v-btn 
+                        color="error" 
+                        block 
+                        @click="logoutUser()"
+                        :loading="processing"
+                    >
+                        Logout
+                    </v-btn>
                 </div>
             </template>
 
@@ -54,71 +57,80 @@
 
 <script>
 
-    import {mapGetters, mapActions} from "vuex"; 
+    import {mapGetters, mapActions, mapState} from "vuex"; 
 
     export default 
     {
         data: () => 
         (
             {
-                drawer: true, 
-                items: 
+                drawer  : true, 
+                mini    : true,
+                items   : 
                 [
-                ['mdi-email', 'Inbox'],
-                ['mdi-account-supervisor-circle', 'Supervisors'],
-                ['mdi-clock-start', 'Clock-in'],
+                    ['mdi-email', 'Inbox'],
+                    ['mdi-account-supervisor-circle', 'Supervisors'],
+                    ['mdi-clock-start', 'Clock-in'],
                 ],
-                mini: true,
             }
         ),
         components: 
         {
-        //...
+            //...
         },
         computed: 
         {
+            ...mapState(
+                'auth', 
+                {
+                    processing  :   state => state.processing
+                }
+            ), 
+
             ...mapGetters(
-                "auth", 
+                'auth', 
                 [
-                'getUser', 
+                    'getUser', 
                 ]
             )
         },     
         methods: 
         {
             ...mapActions(
-                {
-                logoutAction      : "auth/logout", 
-                }
+                'auth',
+                [
+                    'logout'
+                ]
             ),
 
-            logout()
+            logoutUser()
             {
-                this.logoutAction()
-                .then((res) =>
-                    {
-                    if(res.data.success)
-                    {
-                        this.showAlertMessage(
+                this.logout()
+                    .then((res) =>
                         {
-                            "message" : res.data.message, 
-                            "type"    : "info" 
-                        }
-                        ); 
+                            if(res.data.success)
+                            {
+                                this.showAlertMessage(
+                                    {
+                                        "message" : res.data.message, 
+                                        "type"    : "info" 
+                                    }
+                                ); 
 
-                        this.$router.replace({name : 'auth.login'})
-                    } 
-                    else 
-                    {
-                        store.dispatch("alertMessage/destroyAlertMessage");
-                    }
-                    }
-                )
-                .catch(err => 
-                    {
-                    console.log(err); 
-                    }
-                );
+                                this.$router.replace({name : 'auth.login'})
+                            } 
+                        }
+                    )
+                    .catch(err => 
+                        {
+                            this.showAlertMessage(
+                                {
+                                    "message" : "Could not logout", 
+                                    "type"    : "error" 
+                                }
+                            ); 
+                        }
+                    );
             }
         },
     }

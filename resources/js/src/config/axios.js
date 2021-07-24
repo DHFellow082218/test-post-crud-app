@@ -26,6 +26,7 @@ axiosInstance.interceptors.request.use(config =>
 axios.defaults.withCredentials = true; 
 
 //* Interceptors
+
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -50,13 +51,13 @@ axios.interceptors.response.use(response =>
     {
         const originalRequest = err.config;
 
-        if(err.response.status === 404)
+        if(err.response.status === 404 && err.response.data.status === "Authorization Token not found")
         {
             store.commit('auth/SET_USER', null); 
             //router.push({name : 'auth.login'});
         }
 
-        if (err.response.status === 401 && !originalRequest._retry) 
+        if ((err.response.status === 401 && err.response.data.status === "Token is Expired") && !originalRequest._retry) 
         {
             if(isRefreshing) 
             {
@@ -104,7 +105,7 @@ axios.interceptors.response.use(response =>
             );
         }
 
-        return Promise.reject(false);
+        return Promise.reject(err);
     }
 );
 

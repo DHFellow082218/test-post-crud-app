@@ -8,8 +8,7 @@ export default(
         state: 
         {
             user         : null,
-            loading      : false, 
-            formErrors   : {}, 
+            processing   : false, 
         },
         getters:
         {
@@ -17,134 +16,113 @@ export default(
         },
         actions: 
         {
-            async login({dispatch, commit}, credentials)
-            {           
-                commit('SET_LOADING', true);
-                
+            async login({commit}, credentials)
+            {  
+                commit('SET_PROCESSING', true)
+
                 const response  =   await axios.post("auth/login", 
                                         {
                                             "email"         : credentials.email, 
                                             "password"      : credentials.password, 
                                         },
-                                    )
-                                    .catch(error => 
+                                    )      
+                                    .catch(err => 
                                         {
-                                            if(error.response)
-                                            {
-                                              
-                                            }
+                                            return err.response; 
                                         }
-                                    );           
-                
+                                    ) 
+                                
+                commit('SET_PROCESSING', false)
+
                 if(!response)
                 {
-                    commit('SET_LOADING', false);
                     return;
                 }  
 
-                commit('SET_USER', response.data.user);      
-
-                commit('SET_LOADING', false); 
+                if(response.status === 200)
+                {
+                    commit('SET_USER', response.data.user);      
+                }
+                else 
+                {
+                    commit('SET_USER', null);    
+                }
 
                 return response; 
             },
 
             async attempt({commit})
             {              
-                // TODO  Problem : Http only cookie not passed in header, see config/axios.js 
                 const response      =   await axios.get("auth/profile");
             
                 if(!response)
                 {
                     commit('SET_USER', null); 
-                    
+    
                     return; 
                 }
                 
                 commit('SET_USER', response.data.data.item); 
-
-                if(response.status === 200)
-                {
-                    //router.push({name : 'home'}); 
-                }
             },
 
             async register({commit}, credentials)
-            {
-                store.dispatch("alertMessage/destroyAlertMessage");
-                commit('SET_FORM_ERRORS', {}); 
-                commit('SET_LOADING', true);
-                
+            {        
+                commit('SET_PROCESSING', true)
+
                 const response  =   await axios.post("auth/register", 
                                         {
                                             "name"                  :   credentials.name, 
                                             "email"                 :   credentials.email, 
                                             "password"              :   credentials.password, 
                                             'password_confirmation' :   credentials.password_confirmation
-                                        }
+                                        }, 
                                     )
-                                    .catch(error => 
+                                    .catch(function (error)  
                                         {
-                                            if(error.response)
-                                            {
-                                                store.dispatch("alertMessage/showAlertMessage", 
-                                                    {
-                                                        message : error.response.data.message,  
-                                                        type    : "error", 
-                                                    }
-                                                );                                                 
-
-                                                if(error.response.status === 422)
-                                                {
-                                                    commit('SET_FORM_ERRORS', error.response.data.errors); 
-                                                }
-                                            }
+                                            return error.response; 
                                         }
-                                    );           
+                                    );  
+                                    
+                commit('SET_PROCESSING', false)
                 
-                commit('SET_LOADING', false);
-
                 if(!response) return; 
-                
-                if(response.status === 200)
-                {
-                    store.dispatch("alertMessage/showAlertMessage", 
-                        {
-                            message : "User Successfully Registered",  
-                            type    : "success", 
-                        }
-                    );      
-
-                    router.push({name : 'auth.login'}); 
-                } 
 
                 return response;       
             },
 
-            logout({commit})
+            async logout({commit})
             {
-                //? Problem: cookie does NOT get deleted
-                return axios.post('auth/logout')
-                            .then((res) => 
-                                {
-                                    commit('SET_USER', null); 
+                commit('SET_PROCESSING', true); 
 
-                                    return res; 
-                                }
-                            )
-                            .catch(err => 
-                                {
-                                   return err.response; 
-                                }
-                            );
+                return await axios.post('auth/logout')
+                                .then((res) => 
+                                    {
+                                        commit('SET_USER', null); 
+
+                                        return res; 
+                                    }
+                                )
+                                .catch(err => 
+                                    {
+                                        return err.response; 
+                                    }
+                                )
+                                .finally(() => 
+                                    {
+                                        commit('SET_PROCESSING', false)
+                                    }
+                                )
+            },
+
+            async changePassword({commit}, credentials)
+            {
+
             },
 
             async forgotPassword({commit}, credentials)
             {
-                store.dispatch("alertMessage/destroyAlertMessage");
-                commit('SET_FORM_ERRORS', {}); 
-                commit('SET_LOADING', true);
-                
+                commit('SET_PROCESSING', true); 
+
                 const response      =   await axios.post("auth/forgot-password", 
                                             {
                                                 "email"                 :   credentials.email, 
@@ -152,48 +130,21 @@ export default(
                                         )
                                         .catch(error => 
                                             {
-                                                if(error.response)
-                                                {
-                                                    store.dispatch("alertMessage/showAlertMessage", 
-                                                        {
-                                                            message : error.response.data.message,  
-                                                            type    : "error", 
-                                                        }
-                                                    );                                                 
-
-                                                    if(error.response.status === 422)
-                                                    {
-                                                        commit('SET_FORM_ERRORS', error.response.data.errors); 
-                                                    }
-                                                }
+                                                return error.response; 
                                             }
                                         );   
                                         
-                commit('SET_LOADING', false);
 
-                if(!response) return; 
+                commit('SET_PROCESSING', false); 
 
-                if(response.status === 200)
-                {
-                    store.dispatch("alertMessage/showAlertMessage", 
-                        {
-                            message : "Email Sent, Please check your email",  
-                            type    : "success", 
-                        }
-                    );      
+                if(!response) return;
 
-                    router.push({name : 'auth.login'}); 
-                } 
-
+                return response;  
             }, 
 
             async resetPassword({commit}, credentials, token)
             {
-
-                alert(token);
-                store.dispatch("alertMessage/destroyAlertMessage");
-                commit('SET_FORM_ERRORS', {}); 
-                commit('SET_LOADING', true);
+                commit('SET_PROCESSING', true); 
                 
                 const response      =   await axios.post("auth/reset-password", 
                                             {
@@ -205,38 +156,15 @@ export default(
                                         )
                                         .catch(error => 
                                             {
-                                                if(error.response)
-                                                {
-                                                    store.dispatch("alertMessage/showAlertMessage", 
-                                                        {
-                                                            message : error.response.data.message,  
-                                                            type    : "error", 
-                                                        }
-                                                    );                                                 
-
-                                                    if(error.response.status === 422)
-                                                    {
-                                                        commit('SET_FORM_ERRORS', error.response.data.errors); 
-                                                    }
-                                                }
+                                                return error.response; 
                                             }
-                                        );       
-
-                commit('SET_LOADING', false);
+                                        );    
+                                        
+                commit('SET_PROCESSING', false); 
 
                 if(!response) return; 
 
-                if(response.status === 200)
-                {
-                    store.dispatch("alertMessage/showAlertMessage", 
-                        {
-                            message : "Password has been reset",  
-                            type    : "success", 
-                        }
-                    );      
-
-                    router.push({name : 'auth.login'}); 
-                }
+                return response; 
             }, 
 
         }, 
@@ -250,9 +178,9 @@ export default(
             {
                 state.formErrors    = payload; 
             }, 
-            SET_LOADING(state, payload)
+            SET_PROCESSING(state , payload)
             {
-                state.loading       = payload; 
+                state.processing    =  payload; 
             }
         },
     }

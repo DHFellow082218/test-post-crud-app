@@ -45,7 +45,7 @@
                             <v-btn  
                                 color="success" 
                                 block
-                                :loading="loading"
+                                :loading="processing"
                                 @click='submit()'
                             >
                                 Login
@@ -85,18 +85,21 @@ export default
         ...mapState(
             'auth', 
             {
-                loading : state => state.loading
+                processing : state => state.processing 
             }
         )
     },
     methods:
     {
         ...filters, 
+        
         ...mapActions(
-            {
-                login            : "auth/login", 
-            }
+            'auth',
+            [
+                "login" 
+            ]
         ),
+
         submit()
         {
             if(this.$refs.form.validate())
@@ -104,20 +107,34 @@ export default
                 this.login(this.credentials)
                     .then(res => 
                         {
-                            this.$router.push({name : 'home'})
-                            this.showAlertMessage(
-                                {
-                                    message : "Login Success", 
-                                    type    : "success", 
-                                }
-                            )
+                            if(res.status === 200)
+                            {
+                                this.showAlertMessage(
+                                    {
+                                        message : res.data.message, 
+                                        type    : "success", 
+                                    }
+                                )
+                                
+                                this.$router.push({name : 'home'})
+                            }
+
+                            if(res.status === 422)
+                            {
+                                 this.showAlertMessage(
+                                    {
+                                        message : res.data.message, 
+                                        type    : "error", 
+                                    }
+                                )
+                            }
                         } 
                     )
                     .catch(err => 
                         {
                             this.showAlertMessage(
                                 {
-                                    message : "Invalid Credentials", 
+                                    message : "Could not Login. Try again later", 
                                     type    : "error", 
                                 }
                             )

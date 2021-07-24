@@ -35,7 +35,7 @@
                                 color="success" 
                                 block
                                 @click='submit()'
-                                :loading="loading"
+                                :loading="processing"
                             >
                                 Send Password Reset Email
                             </v-btn>
@@ -61,32 +61,84 @@
         data    :   ()  => (
             {
                 credentials     :   [],
+                formErrors      :   {email : null},  
                 rules
             }
         ),
         computed : 
         {
-            ...mapState('auth',
+            ...mapState(
+                'auth', 
                 {
-                    loading     :   state   =>  state.loading, 
-                    formErrors  :   state   =>  state.formErrors 
+                    processing : state => state.processing 
                 }
             )
         },
          methods:
         {
             ...filters, 
+
             ...mapActions(
-                {
-                    forgotPassword   : "auth/forgotPassword", 
-                    showAlertMessage : "alertMessage/showAlertMessage"
-                }, 
+                'auth', 
+                [
+                    "forgotPassword"
+                ]
             ), 
+
             submit()
             {
+                this.setFormErrors(); 
+
                 if(this.$refs.form.validate()) 
                 {
-                   this.forgotPassword(this.credentials); 
+                    this.forgotPassword(this.credentials)
+                        .then(res => 
+                            {
+                                if(res.status === 200)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : res.data.message, 
+                                            type    : "success", 
+                                        }
+                                    )
+                                }
+
+                                if(res.status === 422)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : res.data.message,  
+                                            type    : "error", 
+                                        }
+                                    );  
+
+                                    this.setFormErrors(res.data.errors)
+                                }
+
+                                if(res.status === 500 || res.status === 400)
+                                {
+                                    this.showAlertMessage(
+                                        {
+                                            message : "Could not send Email, Try again later",  
+                                            type    : "error", 
+                                        }
+                                    );  
+
+                                }
+                            }
+                        ) 
+                        .catch(err => 
+                            {
+                                 this.showAlertMessage(
+                                    {
+                                        message : "Something went wrong",  
+                                        type    : "error", 
+                                    }
+                                );  
+
+                            }
+                        )
                 } 
                 else 
                 {
@@ -96,6 +148,21 @@
                             type    : "error", 
                         }
                     )
+                }
+            }, 
+            
+            setFormErrors(errors = null)
+            {
+                if(errors)
+                {
+                    if(errors.email)
+                    {
+                        this.formErrors.email  =  errors.email[0];                 
+                    }
+                }
+                else 
+                {
+                    this.formErrors.email  =  null;      
                 }
             }
         } 

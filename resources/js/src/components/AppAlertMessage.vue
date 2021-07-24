@@ -2,7 +2,7 @@
     <div>
         <v-alert 
             class='mx-auto my-5'
-            width="40%"
+            width="500px"
             elevation="1"
             dismissible
             transition="scale-transition"   

@@ -24,7 +24,14 @@ class ForgotPasswordRequest extends ResponseRequest
     public function rules()
     {
         return [
-            "email" => ["required", "email"]
+            "email" => ["required", "email", "exists:users,email"]
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.exists' => 'Email Provided does not exist in our system',
         ];
     }
 }
