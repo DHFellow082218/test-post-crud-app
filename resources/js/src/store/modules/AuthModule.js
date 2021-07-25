@@ -53,9 +53,14 @@ export default(
 
             async attempt({commit})
             {              
-                const response      =   await axios.get("auth/profile");
-            
-                if(!response)
+                const response      =   await axios.get("auth/profile")
+                                                .catch(err => 
+                                                    {
+                                                        return err.response; 
+                                                    }
+                                                );
+
+                if(response.status === 404)
                 {
                     commit('SET_USER', null); 
     
