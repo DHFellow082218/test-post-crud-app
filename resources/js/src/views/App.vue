@@ -33,34 +33,16 @@
 </script>
 
 <style scoped>
-  .slide-enter-active,
-  .slide-leave-active
-  {
-    transition: opacity 1s, transform 1s;
-  }
-
-  .slide-enter,
-  .slide-leave-to
-  {
-    opacity: 0;
-    transform: translateX(-30%);
-  }
-
   .fade-enter-active,
   .fade-leave-active
   {
     transition: opacity 0.2s ease;
   }
 
-  .fade-enter,
+  .fade-enter-from,
   .fade-leave-to
   {
     opacity: 0;
-  }
-
-  .moveUp-enter-active
-  {
-    animation: fadeIn 0.5s ease-in;
   }
 
   @keyframes fadeIn
@@ -77,22 +59,5 @@
     {
       opacity : 1;
     }
-  }
-
-  @keyframes moveUp
-  {
-    0%
-    {
-      transform : translateY(0);
-    }
-    100%
-    {
-      transform : translateY(-400px);
-    }
-  }
-
-  .moveUp-leave-active
-  {
-    animation  : moveUp 0.3s ease-in;
   }
 </style>
