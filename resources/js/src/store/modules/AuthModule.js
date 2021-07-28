@@ -82,9 +82,9 @@ export default(
                                             'password_confirmation' :   credentials.password_confirmation
                                         }, 
                                     )
-                                    .catch(function (error)  
+                                    .catch(err =>   
                                         {
-                                            return error.response; 
+                                            return err.response; 
                                         }
                                     );  
                                     
@@ -94,6 +94,36 @@ export default(
 
                 return response;       
             },
+
+            async updateProfileDetails({commit, dispatch}, credentials)
+            {
+                commit('SET_PROCESSING', true)
+
+                const response  =   await axios.post("auth/update-profile", 
+                                        {
+                                            "name"                  :   credentials.name, 
+                                            "email"                 :   credentials.email
+                                        }, 
+                                    )
+                                    .catch(err =>
+                                        {
+                                            return err.response; 
+                                        }
+                                    );  
+                                    
+                dispatch('attempt');
+                
+                commit('SET_PROCESSING', false)
+                
+                if(!response) return; 
+                                    
+                return response;       
+            }, 
+
+            async updateProfileImage({commit}, file)
+            {
+
+            }, 
 
             async logout({commit})
             {

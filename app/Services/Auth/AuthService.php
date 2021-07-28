@@ -19,7 +19,7 @@ class AuthService extends BaseService
                 'token'      => $token,
                 'type'       => 'bearer',
                 'expires_in' => auth()->factory()->getTTL() * 60
-              ];
+        ];
     }
 
     public static function createUser($request)
@@ -31,6 +31,18 @@ class AuthService extends BaseService
                 "password"  => bcrypt($request->password), 
             ]
         );
+    }
+
+    public static function updateUser($id, $request)
+    {
+        $user = User::findOrFail($id); 
+
+        return $user->update(
+            [
+                "name"      => $request->name,
+                "email"     => strtolower($request->email), 
+            ]
+        ); 
     }
 
     /**

@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\RefreshController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\UpdateProfileDetailsController; 
 
 use App\Http\Controllers\Post\PostController;
 
@@ -30,6 +31,7 @@ use App\Http\Controllers\Post\PostController;
 Route::prefix('auth')->group(function () 
 {
     Route::get('profile',           ProfileController::class);
+    Route::post('update-profile',   UpdateProfileDetailsController::class);
     Route::post('login',            LoginController::class);
     Route::post('logout',           LogoutController::class);
     Route::post('refresh',          RefreshController::class);
@@ -37,7 +39,6 @@ Route::prefix('auth')->group(function ()
     Route::post('change-password',  ChangePasswordController::class); 
     Route::post('forgot-password',  ForgotPasswordController::class); 
     Route::post('reset-password',   ResetPasswordController::class); 
-
 });
 
 //* Post API Routes

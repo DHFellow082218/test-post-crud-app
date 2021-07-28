@@ -30,7 +30,7 @@ abstract class ResponseRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json(
             [
-                'message'   =>  "Something went wrong!",
+                'message'   =>  "Field Values do not meet the Requirements",
                 'errors'    =>  $validator->errors(),
                 'code'      =>  422,
             ],

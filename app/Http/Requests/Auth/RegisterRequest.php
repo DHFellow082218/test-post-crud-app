@@ -25,7 +25,7 @@ class RegisterRequest extends ResponseRequest
     {
         return [
             'name'     => ['required', 'string', 'between:2,100', 'unique:users,name'],
-            'email'    => ['required', 'string', 'email', 'max:100', 'unique:users'],
+            'email'    => ['required', 'string', 'email', 'max:100', 'unique:users,email'],
             'password' => ['required', 'string', 'confirmed', 'min:6'],
         ];
     }
