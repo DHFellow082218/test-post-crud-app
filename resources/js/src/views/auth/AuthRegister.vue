@@ -17,7 +17,7 @@
                             <v-text-field
                                 v-model="credentials.name"
                                 label="Username"
-                                :rules="[this.rules.required('username'), this.rules.minLength({fieldName:'Username', length:7})]"
+                                :rules="[this.rules.required('Username'), this.rules.minLength({fieldName:'Username', length:7})]"
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined

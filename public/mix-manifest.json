@@ -8,6 +8,8 @@
     "/js/NotFound.js": "/js/NotFound.js",
     "/js/post.js": "/js/post.js",
     "/js/footer.js": "/js/footer.js",
+    "/js/auth-profile-details.vue.js": "/js/auth-profile-details.vue.js",
+    "/js/auth-profile-avatar.js": "/js/auth-profile-avatar.js",
     "/js/headerNavigationDrawer.js": "/js/headerNavigationDrawer.js",
     "/js/headerAppBar.js": "/js/headerAppBar.js",
     "/css/app.css": "/css/app.css"

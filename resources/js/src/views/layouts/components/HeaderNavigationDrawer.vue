@@ -5,42 +5,39 @@
             :mini-variant.sync="mini"
             permanent
         >
-            <v-list-item class="px-2 py-4">
+            <v-list-item class="px-2 py-1">
                 <v-list-item-avatar>
-                <v-img src="https://randomuser.me/api/portraits/men/10.jpg"></v-img>
+                    <v-img :src="'../assets/site_logo.png'"/>
                 </v-list-item-avatar>
-
-                <v-list-item-title>{{getUser.name}}</v-list-item-title>
-
+                <v-list-item-content>
+                    <v-list-item-title>Blog App</v-list-item-title>
+                </v-list-item-content>
                 <v-btn
                     icon
                     @click.stop="mini = !mini"
                 >
-                <v-icon>mdi-chevron-left</v-icon>
+                    <v-icon>mdi-chevron-left</v-icon>
                 </v-btn>
             </v-list-item>
 
             <v-divider class="mt-0"/>
             
             <v-list nav dense>
-                <div
+                <v-list-item
                     v-for="(link, i) in links"
+                    class="text-decoration-none"
                     :key="i"
+                    :to="{name : link.to}"
+                    link 
+                    exact
                 >
-                    <v-list-item
-                        :to="{name : link.to}"
-                        exact
-                        link
-                    >
-                        <v-list-item-icon>
-                            <v-icon>{{link.icon}}</v-icon>
-                        </v-list-item-icon>
-
-                        <v-list-item-content>
-                            <v-list-item-title>{{link.text}}</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
-                </div>
+                    <v-list-item-icon>
+                        <v-icon>{{link.icon}}</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                        <v-list-item-title >{{link.text}}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
             </v-list>
         
             <template v-slot:append v-if="!mini">
@@ -78,11 +75,6 @@
                         text : "Home", 
                         to   : "home"
                     },  
-                    {
-                        icon : "mdi-key", 
-                        text : "Change Password", 
-                        to   : "auth.change-password"
-                    },
                 ],
             }
         ),
@@ -98,13 +90,6 @@
                     processing  :   state => state.processing
                 }
             ), 
-
-            ...mapGetters(
-                'auth', 
-                [
-                    'getUser', 
-                ]
-            )
         },     
         methods: 
         {

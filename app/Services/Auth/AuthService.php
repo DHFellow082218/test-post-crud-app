@@ -27,7 +27,7 @@ class AuthService extends BaseService
         return User::create(
             [
                 "name"      => $request->name,
-                "email"     => $request->email, 
+                "email"     => strtolower($request->email), 
                 "password"  => bcrypt($request->password), 
             ]
         );

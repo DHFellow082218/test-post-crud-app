@@ -36,6 +36,14 @@ export default[
                             }
     }, 
     {
+        path        :       '/profile', 
+        component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "forgot-password" */ "../../views/auth/AuthProfile"),  
+        name        :       'auth.profile', 
+        meta        :       {
+                                middleware : [AuthMiddleware]
+                            }
+    }, 
+    {
         path        :       '/reset-password/:token', 
         component   :        () => import(/* webpackPrefetch: true, webpackChunkName: "reset-password" */ "../../views/auth/AuthResetPassword"),  
         name        :       'auth.reset-password', 
