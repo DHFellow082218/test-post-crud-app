@@ -19,9 +19,9 @@
                                 label="Email"
                                 dense
                                 prepend-inner-icon="mdi-email-outline"
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
+                                :rules="[rules.required('Email'), rules.email()]"
                                 :error-messages="formErrors.email"
-                                @blur="this.toLowerCase"
+                                @blur="toLowerCase"
                                 outlined
                             />
                         </v-col>
@@ -33,7 +33,7 @@
                                 prepend-inner-icon="mdi-lock-outline"
                                 append-icon="mdi-eye-off-outline"
                                 dense
-                                :rules="[this.rules.required('Password'), this.rules.minLength({fieldName:'Password', length:8})]"
+                                :rules="[rules.required('Password'), rules.minLength({fieldName:'Password', length:8})]"
                                 outlined
                             />
                         </v-col>
@@ -44,7 +44,7 @@
                                 label="Confirm Password"
                                 prepend-inner-icon="mdi-lock-check-outline"
                                 dense
-                                :rules="[this.rules.required(), this.rules.equals(this.credentials.password, 'Passwords')]"
+                                :rules="[rules.required(), rules.equals(credentials.password, 'Passwords')]"
                                 outlined
                             />
                         </v-col>
@@ -56,9 +56,9 @@
                         <v-col cols="12" class="d-flex justify-center">
                             <v-btn  
                                 color="success" 
-                                @click='submit()'
-                                :loading="processing"
                                 width="500"
+                                :loading="processing"
+                                @click='handleSubmit()'
                             >
                                 Reset Password
                             </v-btn>
@@ -103,7 +103,7 @@
                 ]
             ),
 
-            submit()
+            handleSubmit()
             {
                 if(this.$refs.form.validate()) 
                 {

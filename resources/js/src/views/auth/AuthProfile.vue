@@ -18,8 +18,8 @@
         title      :  "Profile", 
         components : 
         {
-            AuthProfileDetails : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-details" */ './profile/AuthProfileDetails.vue'),
-            AuthProfileImage : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-image" */ './profile/AuthProfileImage.vue'),
+            AuthProfileDetails  : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-details" */ './profile/AuthProfileDetails.vue'),
+            AuthProfileImage    : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-image" */ './profile/AuthProfileImage.vue'),
         }
     }
 </script>

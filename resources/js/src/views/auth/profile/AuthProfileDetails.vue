@@ -16,7 +16,7 @@
                             <v-text-field
                                 v-model="credentials.name"
                                 label="Username"
-                                :rules="[this.rules.required('Username'), this.rules.minLength({fieldName:'Username', length:7})]"
+                                :rules="[rules.required('Username'), rules.minLength({fieldName:'Username', length:7})]"
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined
@@ -28,7 +28,7 @@
                                 v-model="credentials.email"
                                 label="Email"
                                 prepend-inner-icon="mdi-email-outline"
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
+                                :rules="[rules.required('Email'), rules.email()]"
                                 dense
                                 outlined
                                 :error-messages="formErrors.email"
@@ -128,7 +128,7 @@
                             {
                                 this.showAlertMessage(
                                     {
-                                        message : "Could not update Profile", 
+                                        message : "Could not update Profile Details", 
                                         type    : "error", 
                                     }
                                 )

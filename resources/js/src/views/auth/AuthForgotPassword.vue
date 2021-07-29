@@ -19,9 +19,9 @@
                                 label="Email"
                                 dense
                                 prepend-inner-icon="mdi-email-outline"
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
+                                :rules="[rules.required('Email'), rules.email()]"
                                 :error-messages="formErrors.email"
-                                @blur="this.toLowerCase"
+                                @blur="toLowerCase"
                                 outlined
                             />
                         </v-col>
@@ -34,7 +34,7 @@
                             <v-btn  
                                 color="success" 
                                 block
-                                @click='submit()'
+                                @click='handleSubmit()'
                                 :loading="processing"
                             >
                                 Send Password Reset Email
@@ -85,7 +85,7 @@
                 ]
             ), 
 
-            submit()
+            handleSubmit()
             {
                 this.setFormErrors(); 
 

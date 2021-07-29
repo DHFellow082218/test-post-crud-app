@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\UpdateProfileDetailsController; 
+use App\Http\Controllers\Auth\UpdateProfileImageController; 
 
 use App\Http\Controllers\Post\PostController;
 
@@ -30,15 +31,16 @@ use App\Http\Controllers\Post\PostController;
 //* Auth API Routes
 Route::prefix('auth')->group(function () 
 {
-    Route::get('profile',           ProfileController::class);
-    Route::post('update-profile',   UpdateProfileDetailsController::class);
-    Route::post('login',            LoginController::class);
-    Route::post('logout',           LogoutController::class);
-    Route::post('refresh',          RefreshController::class);
-    Route::post('register',         RegisterController::class);
-    Route::post('change-password',  ChangePasswordController::class); 
-    Route::post('forgot-password',  ForgotPasswordController::class); 
-    Route::post('reset-password',   ResetPasswordController::class); 
+    Route::get('profile',                   ProfileController::class);
+    Route::post('update-profile-details',   UpdateProfileDetailsController::class);
+    Route::post('login',                    LoginController::class);
+    Route::post('logout',                   LogoutController::class);
+    Route::post('refresh',                  RefreshController::class);
+    Route::post('register',                 RegisterController::class);
+    Route::post('change-password',          ChangePasswordController::class); 
+    Route::post('forgot-password',          ForgotPasswordController::class); 
+    Route::post('reset-password',           ResetPasswordController::class); 
+    Route::post('update-profile-image',     UpdateProfileImageController::class);
 });
 
 //* Post API Routes

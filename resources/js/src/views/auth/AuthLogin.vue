@@ -20,8 +20,8 @@
                                 dense 
                                 prepend-inner-icon="mdi-email-outline"
                                 outlined
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
-                                @blur="this.toLowerCase"
+                                :rules="[rules.required('Email'), rules.email()]"
+                                @blur="toLowerCase"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -32,7 +32,7 @@
                                 dense
                                 prepend-inner-icon="mdi-lock-outline"
                                 append-icon="mdi-eye-off-outline"
-                                :rules="[this.rules.required('Password')]"
+                                :rules="[rules.required('Password')]"
                                 outlined
                             />
                         </v-col>
@@ -46,7 +46,7 @@
                                 color="success" 
                                 block
                                 :loading="processing"
-                                @click='submit()'
+                                @click='handleSubmit()'
                             >
                                 Login
                             </v-btn>
@@ -100,7 +100,7 @@ export default
             ]
         ),
 
-        submit()
+        handleSubmit()
         {
             if(this.$refs.form.validate())
             {

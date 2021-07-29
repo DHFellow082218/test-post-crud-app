@@ -1,3 +1,10 @@
+const userProfileImagePath  =   "storage/profile_image/";  
+
+export const paths   =   
+{
+    getUserProfileImagePath : (file) => userProfileImagePath + file, 
+} 
+
 /*
 
 import store from '../store'

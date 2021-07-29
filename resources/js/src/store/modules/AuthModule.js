@@ -1,6 +1,4 @@
 import axios from 'axios';
-import router from '../../router/index';
-import store from '../index'; 
 
 export default(
     {
@@ -60,7 +58,7 @@ export default(
                                                     }
                                                 );
 
-                if(response.status === 404)
+                if(response.status === 404 || response.data.data === null)
                 {
                     commit('SET_USER', null); 
     
@@ -99,7 +97,7 @@ export default(
             {
                 commit('SET_PROCESSING', true)
 
-                const response  =   await axios.post("auth/update-profile", 
+                const response  =   await axios.post("auth/update-profile-details", 
                                         {
                                             "name"                  :   credentials.name, 
                                             "email"                 :   credentials.email
@@ -111,18 +109,41 @@ export default(
                                         }
                                     );  
                                     
-                dispatch('attempt');
-                
+                                    
                 commit('SET_PROCESSING', false)
-                
+                                    
                 if(!response) return; 
                                     
+                dispatch('attempt');
+
                 return response;       
             }, 
 
-            async updateProfileImage({commit}, file)
+            async updateProfileImage({dispatch}, file)
             {
+                const formData = new FormData(); 
+                
+                formData.append('profile_image', file); 
 
+                const response  =   await axios.post("auth/update-profile-image", 
+                                        formData,   
+                                        {
+                                            headers: {
+                                              'Content-Type': 'multipart/form-data'
+                                            }
+                                        }
+                                    )
+                                    .catch(err =>
+                                        {
+                                            return err.response; 
+                                        }
+                                    );  
+                                    
+                if(!response) return; 
+                                    
+                dispatch('attempt');
+
+                return response;       
             }, 
 
             async logout({commit})

@@ -17,7 +17,7 @@
                             <v-text-field
                                 v-model="credentials.name"
                                 label="Username"
-                                :rules="[this.rules.required('Username'), this.rules.minLength({fieldName:'Username', length:7})]"
+                                :rules="[rules.required('Username'), rules.minLength({fieldName:'Username', length:7})]"
                                 prepend-inner-icon="mdi-card-account-details-star-outline"
                                 dense
                                 outlined
@@ -29,11 +29,11 @@
                                 v-model="credentials.email"
                                 label="Email"
                                 prepend-inner-icon="mdi-email-outline"
-                                :rules="[this.rules.required('Email'), this.rules.email()]"
+                                :rules="[rules.required('Email'), rules.email()]"
                                 dense
                                 outlined
                                 :error-messages="formErrors.email"
-                                @blur="this.toLowerCase"
+                                @blur="toLowerCase"
                             />
                         </v-col>
                         <v-col cols="12">
@@ -43,7 +43,7 @@
                                 label="Password"
                                 prepend-inner-icon="mdi-lock-outline"
                                 :append-icon="showPassword ? 'mdi-eye-off-outline' :'mdi-eye'"
-                                :rules="[this.rules.required('Password'), this.rules.minLength({fieldName:'Password', length:8})]"
+                                :rules="[rules.required('Password'), rules.minLength({fieldName:'Password', length:8})]"
                                 dense
                                 outlined
                                 @click:append="() => (showPassword = !showPassword)"
@@ -55,7 +55,7 @@
                                 v-model="credentials.password_confirmation"
                                 label="Confirm Password"
                                 prepend-inner-icon="mdi-lock-check-outline"
-                                :rules="[this.rules.required(), this.rules.equals(this.credentials.password, 'Passwords')]"
+                                :rules="[rules.required(), rules.equals(credentials.password, 'Passwords')]"
                                 dense
                                 outlined
                             />
@@ -69,7 +69,7 @@
                         <v-btn color="success" 
                             block 
                             :loading="processing"
-                            @click="submit()"
+                            @click="handleSubmit()"
                         >
                             Register
                         </v-btn>
@@ -124,7 +124,7 @@
                 ]
             ), 
 
-            submit()
+            handleSubmit()
             {
                 this.setFormErrors();
 

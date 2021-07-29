@@ -13,7 +13,7 @@ class UpdateProfileImageRequest extends ResponseRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,7 @@ class UpdateProfileImageRequest extends ResponseRequest
     public function rules()
     {
         return [
-            //
+            "profile_image"     =>      ['required', 'image', 'mimes:jpeg,jpg,png']
         ];
     }
 }

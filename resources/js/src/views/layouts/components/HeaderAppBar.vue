@@ -26,7 +26,7 @@
                     <template v-slot:activator="{ on: menu, attrs }">
                         <v-list-item>
                             <v-list-item-avatar>
-                            <v-img src="https://randomuser.me/api/portraits/men/11.jpg"></v-img>
+                                <v-img :src="paths.getUserProfileImagePath(getUser.profile_image)"></v-img>
                             </v-list-item-avatar>
 
                             <v-list-item-content>
@@ -75,6 +75,7 @@
 </template>
 <script>
     import {mapGetters, mapActions} from 'vuex'; 
+    import {paths} from '../../../utils/PathUtil'; 
 
     export default 
     {
@@ -93,6 +94,7 @@
                         to   : "auth.change-password"
                     },
                 ],
+                paths, 
             }
         ),
         computed: 
