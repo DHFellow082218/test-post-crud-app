@@ -26,7 +26,7 @@
                     <template v-slot:activator="{ on: menu, attrs }">
                         <v-list-item>
                             <v-list-item-avatar>
-                            <v-img src="https://randomuser.me/api/portraits/men/60.jpg"></v-img>
+                            <v-img src="https://randomuser.me/api/portraits/men/11.jpg"></v-img>
                             </v-list-item-avatar>
 
                             <v-list-item-content>

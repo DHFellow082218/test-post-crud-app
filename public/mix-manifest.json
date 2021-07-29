@@ -12,5 +12,7 @@
     "/js/auth-profile-avatar.js": "/js/auth-profile-avatar.js",
     "/js/headerNavigationDrawer.js": "/js/headerNavigationDrawer.js",
     "/js/headerAppBar.js": "/js/headerAppBar.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/auth-profile-details.js": "/js/auth-profile-details.js",
+    "/js/auth-profile-image.js": "/js/auth-profile-image.js"
 }

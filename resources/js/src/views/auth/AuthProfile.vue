@@ -6,7 +6,7 @@
             </v-col>      
             <v-spacer/>  
             <v-col cols="12" md="5">
-                <auth-profile-avatar/>
+                <auth-profile-image/>
             </v-col>    
         </v-row>
     </v-container>
@@ -18,8 +18,8 @@
         title      :  "Profile", 
         components : 
         {
-            AuthProfileDetails : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-details.vue" */ './profile/AuthProfileDetails.vue'),
-            AuthProfileAvatar : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-avatar" */ './profile/AuthProfileAvatar.vue'),
+            AuthProfileDetails : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-details" */ './profile/AuthProfileDetails.vue'),
+            AuthProfileImage : () => import(/* webpackPrefetch: true, webpackChunkName: "auth-profile-image" */ './profile/AuthProfileImage.vue'),
         }
     }
 </script>
