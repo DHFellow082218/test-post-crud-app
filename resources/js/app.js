@@ -13,8 +13,7 @@ window.Vue = require('vue').default;
 require('./src/config/axios'); 
 
 //* Utils 
-require('./src/utils/subscriber'); 
-//require('./src/utils/reauthenticate');
+//...
 
 //* Components 
 import App from './src/views/App.vue';
