@@ -1,10 +1,9 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
-import 'vuetify/dist/vuetify.min.css';
+import colors from 'vuetify/lib/util/colors' 
 
-// Ensure you are using css-loader
-import '@mdi/font/css/materialdesignicons.css'; 
-//import 'material-design-icons-iconfont/dist/material-design-icons.css' 
+import 'vuetify/dist/vuetify.min.css';
+import '@mdi/font/css/materialdesignicons.css';
 
 Vue.use(Vuetify)
 
@@ -20,18 +19,16 @@ export default new Vuetify(
             {
                 light: 
                 {
-                    primary     : '#3fa1f5',
-                    secondary   : '#696969',
-                    accent      : '#8cfebf',
-                    error       : '#ff3a50',
-                    black       : '#111',
+                    primary     : colors.blue,
+                    secondary   : colors.grey.darken1,
+                    accent      : colors.shades.black,
+                    error       : colors.red.accent2,
+                    background  : colors.grey.lighten5, 
                 },
-                dark:
+                dark: 
                 {
-                    primary     : '#3fa1f5',
-                    secondary   : '#696969',
-                    accent      : '#8cfebf',
-                    error       : '#f23a50',
+                    primary     : colors.blue.lighten3, 
+                    background  : colors.indigo.base
                 }, 
             },
         },

@@ -68,8 +68,8 @@ const app = new Vue(
     {
         el          : '#app',
         components  : {App}, 
-        router      : router,
-        vuetify     : vuetify, 
-        store       : store, 
+        router,
+        store,
+        vuetify  
     }
 );

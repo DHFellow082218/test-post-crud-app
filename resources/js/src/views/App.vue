@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire" class="teal lighten-2">
+  <v-app id="inspire" :style="{background: $vuetify.theme.themes['light'].background}">
     <template v-if="!isRouteNameError($route.name)">
       <header>
         <the-header/>
