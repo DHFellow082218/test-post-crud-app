@@ -125,13 +125,14 @@ $ npm run watch
 
 ### Repository Structure
 
-The main repository will be divided into branches that may increase over time to modularize development. The purpose of the **first three branches** will remain the same throughout our project development.
+The Repository is divided into branches in order to organize development. The purpose of the **first four branches** will remain the same.
 
 |Branch                                    |Description                                                                                                                              |
 |:----------------------------------------:|:---------------------------------------------------------------------------------------------------------------------------------------:|
-|`master`                                  |The default branch; will always contain the latest changes.                                                                              |
-|`_develop`                                |This branch contains code that is configured for a production environment to be tested in a live server                                  |  
-|`_production`                             |This branch contains code that was tested in `_develop` and is actively being used in the live server by our clients                     |
+|`master`                                  |Contains stable code that was tested in the release branch and is currently deployed in a production server                              |
+|`hotfix`                                  |Contains hofixes for the master branch.                                                                                                  |
+|`release`                                 |Contains code to be tested in a production server and is staged to be deployed in the next release                                       |
+|`develop`                                 |Contains the latest committed code. Code can be separated in individual Feature branches and remerged here                               |  
 
 ### Forking the Project  
 
