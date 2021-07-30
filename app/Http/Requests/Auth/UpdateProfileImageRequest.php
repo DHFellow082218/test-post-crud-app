@@ -24,7 +24,7 @@ class UpdateProfileImageRequest extends ResponseRequest
     public function rules()
     {
         return [
-            "profile_image"     =>      ['required', 'image', 'mimes:jpeg,jpg,png']
+            "profile_image"     =>      ['required', 'image', 'max:1024', 'mimes:jpeg,jpg,png']
         ];
     }
 }

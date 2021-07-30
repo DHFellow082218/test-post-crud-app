@@ -119,8 +119,10 @@ export default(
                 return response;       
             }, 
 
-            async updateProfileImage({dispatch}, file)
+            async updateProfileImage({commit, dispatch}, file)
             {
+                commit('SET_PROCESSING', true)
+
                 const formData = new FormData(); 
                 
                 formData.append('profile_image', file); 
@@ -139,6 +141,8 @@ export default(
                                         }
                                     );  
                                     
+                commit('SET_PROCESSING', false)
+
                 if(!response) return; 
                                     
                 dispatch('attempt');

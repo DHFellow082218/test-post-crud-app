@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="inspire" class="teal lighten-2">
     <template v-if="!isRouteNameError($route.name)">
       <header>
         <the-header/>

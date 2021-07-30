@@ -5,7 +5,7 @@
                 <v-img
                     contain
                     height="500"
-                    :src="paths.getUserProfileImagePath(getUser.profile_image)"
+                    :src="getProfileImage"
                 >
                     <v-fade-transition>
                         <div
@@ -24,7 +24,10 @@
             v-model="dialog"
             width="500"
         >
-            <v-card class="px-5">
+            <v-card 
+                :loading="processing" 
+                class="px-5"
+            >
                 <v-card-title>
                     Change Profile Image
                 </v-card-title>
@@ -39,7 +42,7 @@
                                 outlined
                                 dense
                                 show-size
-                                :rules="[rules.fileSize('File', 200000), rules.fileType('File', ['jpg', 'jpeg', 'png'])]"
+                                :rules="[rules.fileSize('File', 1, 'MB'), rules.fileType('File', ['jpg', 'jpeg', 'png'])]"
                                 :error-messages="formErrors.file"
                             />     
                         </v-form>
@@ -66,7 +69,7 @@
 </template>
 
 <script>
-    import {mapGetters, mapActions} from 'vuex'; 
+    import {mapGetters, mapActions, mapState} from 'vuex'; 
     import {rules, filters} from '../../../utils/FormUtil'; 
     import {paths} from '../../../utils/PathUtil'; 
 
@@ -80,19 +83,36 @@
                 {
                      file   : null, 
                 }, 
-                dialog : false, 
+                dialog      : false, 
                 rules, 
                 paths, 
             }
         ),
         computed: 
         {
+            ...mapState(
+                'auth', 
+                {
+                    processing : state => state.processing 
+                }
+            ), 
+
             ...mapGetters(
                 'auth', 
                 [
                     'getUser'
                 ]
-            )
+            ), 
+
+            getProfileImage()
+            {
+                if(this.getUser != null) 
+                {
+                    return paths.getUserProfileImagePath(this.getUser.profile_image); 
+                }
+
+                return null; 
+            }
         }, 
         methods:
         {
@@ -107,10 +127,10 @@
 
             handleSubmit() 
             {
-                this.setFormErrors(); 
+                this.setFormErrors();
 
                 if(this.$refs.form.validate())
-                {
+                {   
                     this.updateProfileImage(this.file)
                         .then(res => 
                             {

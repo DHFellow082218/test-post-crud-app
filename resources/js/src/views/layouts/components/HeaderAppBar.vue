@@ -26,7 +26,7 @@
                     <template v-slot:activator="{ on: menu, attrs }">
                         <v-list-item>
                             <v-list-item-avatar>
-                                <v-img :src="paths.getUserProfileImagePath(getUser.profile_image)"></v-img>
+                                <v-img :src="getProfileImage"></v-img>
                             </v-list-item-avatar>
 
                             <v-list-item-content>
@@ -104,7 +104,17 @@
                 [
                     'getUser', 
                 ]
-            )
+            ),
+
+            getProfileImage()
+            {
+                if(this.getUser != null) 
+                {
+                    return paths.getUserProfileImagePath(this.getUser.profile_image); 
+                }
+
+                return null; 
+            }
         },
         methods: 
         {

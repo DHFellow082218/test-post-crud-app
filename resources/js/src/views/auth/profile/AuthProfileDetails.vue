@@ -1,13 +1,14 @@
 <template lang="">
     <div>
         <v-card
+            flat
             class="mx-auto px-5"
         >
             <v-card-title 
                 primary-title
                 class="justify-center py-5 display-1"
             >
-                Update Profile
+                My Profile
             </v-card-title>
             <v-card-text class="pt-10 pb-5 border-top border-bottom">
                 <v-form @submit="e.prevent.default()" ref="form">
